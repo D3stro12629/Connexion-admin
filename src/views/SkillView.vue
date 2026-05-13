@@ -7,33 +7,33 @@
         <div class="header-content">
           <div class="title-stack">
             <h1>
-              Skills
+              ជំនាញ
               <span class="count-chip" v-if="!skillStore.isLoading">
-                {{ skillStore.skills?.length || 0 }} Total
+                {{ skillStore.skills?.length || 0 }} សរុប
               </span>
             </h1>
-            <p class="subtitle-text">Define and manage core competencies for the platform</p>
+            <p class="subtitle-text">កំណត់ និងគ្រប់គ្រងជំនាញមូលដ្ឋានសម្រាប់ព័ត៌មាន</p>
           </div>
           <div class="header-actions">
             <div class="action-group">
               <div class="search-wrapper">
                 <i class="bi bi-search search-icon"></i>
-                <input v-model="searchQuery" type="text" placeholder="Search skills..." />
+                <input v-model="searchQuery" type="text" placeholder="ស្វែងរកជំនាញ..." />
                 <div class="search-shortcut">⌘K</div>
               </div>
               <button class="primary-add-btn" @click="openCreateModal">
                 <i class="bi bi-plus-lg"></i>
-                <span>Add Skill</span>
+                <span>បន្ថែមជំនាញ</span>
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- 2. BENTO STATS SECTION (SKELETON INTEGRATED) -->
+      <!-- 2. BENTO STATS SECTION -->
       <section class="stats-row">
         <template v-if="skillStore.isLoading">
-          <div v-for="i in 3" :key="'stat-s-' + i" class="stat-card">
+          <div v-for="i in 2" :key="'stat-s-' + i" class="stat-card">
             <BaseSkeleton width="56px" height="56px" radius="18px" />
             <div class="stat-data">
               <BaseSkeleton width="70px" height="12px" radius="4px" style="margin-bottom: 8px; display: block;" />
@@ -45,38 +45,30 @@
           <div class="stat-card">
             <div class="stat-icon blue"><i class="bi bi-layers-fill"></i></div>
             <div class="stat-data">
-              <span class="label">Total Items</span>
+              <span class="label">ចំនួនសរុប</span>
               <span class="value">{{ skillStore.skills?.length || 0 }}</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon green"><i class="bi bi-patch-check-fill"></i></div>
-            <div class="stat-data">
-              <span class="label">Active Skills</span>
-              <span class="value">{{ activeCount }}</span>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-icon purple"><i class="bi bi-lightning-fill"></i></div>
             <div class="stat-data">
-              <span class="label">Recently Added</span>
+              <span class="label">បន្ថែមថ្មី</span>
               <span class="value">{{ newlyAddedCount }}</span>
             </div>
           </div>
         </template>
       </section>
 
-      <!-- 3. MAIN TABLE SECTION (SKELETON INTEGRATED) -->
+      <!-- 3. MAIN TABLE SECTION -->
       <main class="content-wrapper">
         <div class="table-container">
           <table class="premium-table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Skill Name</th>
-                <th>Current Status</th>
-                <th>Created Date</th>
-                <th class="text-end">Actions</th>
+                <th>ល.រ</th>
+                <th>ឈ្មោះជំនាញ</th>
+                <th>កាលបរិច្ឆេទបង្កើត</th>
+                <th class="text-end">ការកំណត់</th>
               </tr>
             </thead>
             <tbody>
@@ -90,9 +82,6 @@
                       <BaseSkeleton width="44px" height="44px" radius="12px" />
                       <BaseSkeleton width="180px" height="16px" radius="4px" />
                     </div>
-                  </td>
-                  <td>
-                    <BaseSkeleton width="80px" height="24px" radius="10px" />
                   </td>
                   <td>
                     <BaseSkeleton width="110px" height="16px" radius="4px" />
@@ -115,11 +104,6 @@
                       <span class="name-text">{{ skill.name }}</span>
                     </div>
                   </td>
-                  <td>
-                    <span class="status-pill" :class="getStatusClass(skill.status)">
-                      {{ skill.status || 'Active' }}
-                    </span>
-                  </td>
                   <td><span class="date-text">{{ formatDate(skill.created_at) }}</span></td>
                   <td class="text-end">
                     <div class="action-btns">
@@ -136,18 +120,22 @@
             </tbody>
           </table>
 
-          <footer v-if="totalEntries > 0" class="premium-pagination-footer">
-            <div class="pagination-left">
-              <p class="entries-text">
-                Showing <span class="mono-num">{{ showingStart }}</span>
-                to <span class="mono-num">{{ showingEnd }}</span>
-                of <span class="mono-num total">{{ totalEntries }}</span> entries
-              </p>
-            </div>
-            <div class="pagination-right">
-              <BasePagination v-model:page="currentPage" :per-page="itemsPerPage" :total-items="totalEntries" />
-            </div>
-          </footer>
+    <footer v-if="totalEntries > 0" class="premium-pagination-footer">
+  <div class="pagination-left">
+    <p class="entries-text">
+      កំពុងបង្ហាញ <span class="highlight-num">{{ showingStart }}</span>
+      ដល់ <span class="highlight-num">{{ showingEnd }}</span>
+      នៃ <span class="highlight-num">{{ totalEntries }}</span> ទិន្នន័យសរុប
+    </p>
+  </div>
+  <div class="pagination-right">
+    <BasePagination 
+      v-model:page="currentPage" 
+      :per-page="itemsPerPage" 
+      :total-items="totalEntries" 
+    />
+  </div>
+</footer>
         </div>
       </main>
 
@@ -162,21 +150,21 @@
               <div class="modal-content compact-padding">
                 <div class="modal-header-clean">
                   <div class="icon-circle compact"><i class="bi bi-lightning-charge-fill"></i></div>
-                  <h2>{{ isEditing ? 'Update Skill' : 'Add Skill' }}</h2>
+                  <h2>{{ isEditing ? 'កែប្រែ​ជំនាញ' : 'បន្ថែម​ជំនាញ' }}</h2>
                 </div>
                 <div class="form-body">
                   <div class="input-group-custom">
-                    <label>Skill Name</label>
+                    <label>ឈ្មោះជំនាញ</label>
                     <input v-model="form.name" placeholder="e.g. JavaScript / UI Design"
                       :class="{ 'has-error': errors.name }" @blur="validate('name')" />
                     <span v-if="errors.name" class="error-msg">{{ errors.name }}</span>
                   </div>
                 </div>
                 <div class="modal-footer-refined">
-                  <button class="btn-secondary" @click="showFormModal = false">Cancel</button>
+                  <button class="btn-secondary" @click="showFormModal = false">បោះបង់</button>
                   <button class="btn-primary" :disabled="skillStore.isProcessing" @click="saveSkill">
                     <span v-if="skillStore.isProcessing" class="spinner-border spinner-border-sm me-2"></span>
-                    Save Changes
+                    {{ isEditing ? 'កែប្រែ' : 'បន្ថែម' }}
                   </button>
                 </div>
               </div>
@@ -193,15 +181,16 @@
               <div class="modal-content compact-padding">
                 <div class="modal-header-clean">
                   <div class="icon-circle compact danger"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                  <h2>Delete?</h2>
+                  <h2>លុប?</h2>
                 </div>
                 <div class="delete-warning">
-                  <p>Are you sure you want to remove <strong>"{{ selectedItem?.name }}"</strong>?</p>
+                  <p>តើអ្នកប្រាកដថាចង់លុប <strong>"{{ selectedItem?.name }}"</strong>ចេញមែនទេ?</p>
                 </div>
                 <div class="modal-footer-refined">
-                  <button class="btn-secondary" @click="showDeleteModal = false">No</button>
-                  <button class="btn-danger" :disabled="skillStore.isProcessing" @click="confirmDelete">Yes,
-                    Delete</button>
+                  <button class="btn-secondary" @click="showDeleteModal = false">ទេ</button>
+                  <button class="btn-danger" :disabled="skillStore.isProcessing" @click="confirmDelete">
+                    <span v-if="skillStore.isProcessing" class="spinner-border spinner-border-sm me-2"></span>
+                    យល់ព្រម</button>
                 </div>
               </div>
             </div>
@@ -217,21 +206,18 @@
               <div class="modal-content compact-padding">
                 <div class="modal-header-clean">
                   <div class="icon-circle compact detail"><i class="bi bi-tag-fill"></i></div>
-                  <h2>Skill Details</h2>
+                  <h2>ព័ត៌មានលម្អិត</h2>
                 </div>
                 <div class="info-grid-simple">
-                  <div class="info-box full"><label>Competency Name</label>
+                  <div class="info-box full"><label>ឈ្មោះជំនាញ</label>
                     <p class="large-text">{{ selectedItem?.name }}</p>
                   </div>
-                  <div class="info-box"><label>Status</label>
-                    <p><span class="status-pill status-active">{{ selectedItem?.status || 'Active' }}</span></p>
-                  </div>
-                  <div class="info-box"><label>Created At</label>
+                  <div class="info-box full"><label>កាលបរិច្ឆេទបង្កើត</label>
                     <p class="date-visible">{{ formatDate(selectedItem?.created_at) }}</p>
                   </div>
                 </div>
                 <div class="modal-footer-refined">
-                  <button class="btn-secondary full-width" @click="showDetailsModal = false">Dismiss</button>
+                  <button class="btn-secondary full-width" @click="showDetailsModal = false">បិទ</button>
                 </div>
               </div>
             </div>
@@ -253,12 +239,10 @@ import { useSkillStore } from '@/stores/skills'
 import { useFormValidation, validationRules } from '@/composables/useFormValidation'
 import { useToast } from '@/composables/useToast'
 
-// 1. INITIALIZE STORES & TOOLS
 const skillStore = useSkillStore()
 const route = useRoute()
 const toast = useToast()
 
-// 2. STATE MANAGEMENT
 const searchQuery = ref('')
 const showFormModal = ref(false)
 const showDetailsModal = ref(false)
@@ -269,16 +253,13 @@ const currentPage = ref(1)
 const itemsPerPage = ref(10)
 const form = reactive({ name: '' })
 
-// 3. VALIDATION
 const { errors, validateField: validate, validate: validateAll, reset: resetValidation } = useFormValidation(form, {
   name: [validationRules.required('Skill name is required'), validationRules.maxLength(255)]
 })
 
-// 4. COMPUTED PROPERTIES
 const totalEntries = computed(() => filteredSkills.value.length)
 const showingStart = computed(() => totalEntries.value === 0 ? 0 : (currentPage.value - 1) * itemsPerPage.value + 1)
 const showingEnd = computed(() => Math.min(currentPage.value * itemsPerPage.value, totalEntries.value))
-const activeCount = computed(() => (skillStore.skills || []).length)
 
 const newlyAddedCount = computed(() => {
   const weekAgo = new Date();
@@ -296,11 +277,8 @@ const paginatedSkills = computed(() => {
   return filteredSkills.value.slice(start, start + itemsPerPage.value)
 })
 
-// 5. LIFECYCLE HOOKS
 onMounted(async () => {
   await skillStore.fetchSkills()
-
-  // Trigger modal if coming from Dashboard 'Add Skill' button
   if (route.query.action === 'create') {
     openCreateModal()
   }
@@ -310,7 +288,6 @@ onUnmounted(() => {
   document.body.style.overflow = ''
 })
 
-// 6. METHODS
 const openCreateModal = () => {
   isEditing.value = false;
   form.name = '';
@@ -363,14 +340,11 @@ const confirmDelete = async () => {
 }
 
 const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'
-const getStatusClass = (s) => (!s || s === 'Active') ? 'status-active' : 'status-pending'
 
-// 7. WATCHERS
 watch(searchQuery, () => {
   currentPage.value = 1
 })
 
-// Watch for the route action in case the user clicks 'Add Skill' while already on the page
 watch(() => route.query.action, (newAction) => {
   if (newAction === 'create') openCreateModal()
 })
@@ -379,6 +353,7 @@ watch([showFormModal, showDetailsModal, showDeleteModal], (v) => {
   document.body.style.overflow = v.some(x => x) ? 'hidden' : ''
 })
 </script>
+
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
@@ -502,7 +477,7 @@ watch([showFormModal, showDetailsModal, showDeleteModal], (v) => {
 /* Stats */
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
@@ -531,11 +506,6 @@ watch([showFormModal, showDetailsModal, showDeleteModal], (v) => {
 .stat-icon.blue {
   background: rgba(99, 102, 241, 0.1);
   color: var(--accent);
-}
-
-.stat-icon.green {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22c55e;
 }
 
 .stat-icon.purple {
@@ -611,20 +581,6 @@ watch([showFormModal, showDetailsModal, showDeleteModal], (v) => {
   color: white;
   font-weight: 800;
   font-size: 1.2rem;
-}
-
-.status-pill {
-  padding: 5px 12px;
-  border-radius: 8px;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  border: 1px solid currentColor;
-}
-
-.status-active {
-  background: rgba(52, 211, 153, 0.1);
-  color: #34d399;
 }
 
 .name-text {
@@ -809,7 +765,7 @@ watch([showFormModal, showDetailsModal, showDeleteModal], (v) => {
 
 .info-grid-simple {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
@@ -895,5 +851,74 @@ watch([showFormModal, showDetailsModal, showDeleteModal], (v) => {
   .search-wrapper {
     width: 100%;
   }
+}
+/* 1. Footer Container */
+.premium-pagination-footer {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  background: transparent;
+}
+
+/* 2. Left Side Text Style */
+.entries-text {
+  color: #71717a !important; /* Muted gray from screenshot */
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.highlight-num {
+  color: #ffffff; /* White numbers */
+  font-weight: 700;
+  margin: 0 2px;
+}
+
+/* 3. Pagination Button Style (The White Blocks) */
+:deep(.pagination-right .pagination-container),
+:deep(.pagination-right ul) {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+:deep(.pagination-right button),
+:deep(.pagination-right .page-link) {
+  background: #ffffff !important; /* Pure white background */
+  color: #000000 !important;    /* Pure black text */
+  border: none !important;
+  border-radius: 8px !important;  /* Rounded corners */
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+/* Hover effect for the button */
+:deep(.pagination-right button:hover) {
+  transform: scale(1.05);
+  background: #f4f4f5 !important;
+}
+
+/* Specifically style the active page if your component uses an 'active' class */
+:deep(.pagination-right .active button),
+:deep(.pagination-right .is-active button) {
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 0 0 2px var(--accent); /* Subtle glow to show it's selected */
+}
+
+/* Hide Prev/Next arrows if you want it exactly like the screenshot */
+:deep(.pagination-right .prev-btn),
+:deep(.pagination-right .next-btn) {
+  display: none !important;
 }
 </style>

@@ -13,13 +13,11 @@
                         <template v-else>
                             <span class="date-badge fade-in">{{ formattedDate }}</span>
                             <h1 class="fade-in">Connexion Insights</h1>
-                            <p class="subtitle-text fade-in">Real-time overview of your platform's ecosystem.</p>
+                            <p class="subtitle-text fade-in">ទិដ្ឋភាពទូទៅពេលវេលាពិតនៃប្រព័ន្ធរបស់វេទិកាអ្នក</p>
                         </template>
                     </div>
                 </div>
             </header>
-
-            <!-- 2. STATS ROW (FIXED: Now points to liveStatCards) -->
             <section class="stats-row">
                 <template v-if="dashboardStore.isLoading">
                     <div v-for="i in 6" :key="'stat-skel' + i" class="stat-card skeleton-card">
@@ -60,7 +58,7 @@
                 <!-- Quick Controls -->
                 <div class="content-wrapper bento-box quick-controls">
                     <div class="box-header">
-                        <h3>Quick Actions</h3>
+                        <h3>អាចបញ្ចលបន្ថែម</h3>
                     </div>
                     <div class="actions-list">
                         <template v-if="dashboardStore.isLoading">
@@ -103,7 +101,7 @@
                                 </div>
                                 <div class="fade-in">
                                     <h3>{{ section.title }}</h3>
-                                    <span class="new-count-label" :style="{ color: section.color }">{{ section.data.length }} items total</span>
+                                    <span class="new-count-label" :style="{ color: section.color }">{{ section.data.length }} ចំនួនសរុប</span>
                                 </div>
                             </template>
                         </div>
@@ -129,7 +127,7 @@
                         
                         <div v-if="!section.data?.length" class="empty-state">
                             <i class="bi bi-calendar-x"></i>
-                            <p>No records found</p>
+                            <p>មិនមានទិន្នន័យ</p>
                         </div>
                     </div>
                 </div>
@@ -143,8 +141,6 @@ import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import BarChart from '@/components/charts/BarChart.vue'
-
-// 1. IMPORT ALL NECESSARY STORES
 import { useDashboardStore } from '@/stores/dashboard'
 import { useDegreeStore } from '@/stores/degrees'
 import { useSchoolStore } from '@/stores/schools'
@@ -153,8 +149,6 @@ import { useCategoryStore } from '@/stores/categories'
 import { useSubjectStore } from '@/stores/subject'
 
 const router = useRouter()
-
-// 2. INITIALIZE ALL STORES
 const dashboardStore = useDashboardStore()
 const degreeStore = useDegreeStore()
 const schoolStore = useSchoolStore()
@@ -164,7 +158,6 @@ const subjectStore = useSubjectStore()
 
 onMounted(async () => {
     dashboardStore.fetchDashboardData()
-    // 3. FETCH ALL DATA ON MOUNT
     await Promise.all([
         degreeStore.fetchDegrees(),
         schoolStore.fetchSchools(),
@@ -174,33 +167,30 @@ onMounted(async () => {
     ])
 })
 
-// 4. LIVE STAT CARDS CALCULATION
 const liveStatCards = computed(() => [
-    { label: 'Total Users', value: dashboardStore.totalUsers || 0, icon: 'bi-people-fill', iconColor: '#3b82f6' },
-    { label: 'Total Skills', value: skillStore.skills?.length || 0, icon: 'bi-lightbulb-fill', iconColor: '#a855f7' },
-    { label: 'Total Schools', value: schoolStore.schools?.length || 0, icon: 'bi-building-fill', iconColor: '#10b981' },
-    { label: 'Total Degrees', value: degreeStore.degrees?.length || 0, icon: 'bi-mortarboard-fill', iconColor: '#f59e0b' },
-    { label: 'Total Categories', value: categoryStore.categories?.length || 0, icon: 'bi-folder-fill', iconColor: '#06b6d4' },
-    { label: 'Total Subjects', value: subjectStore.subjects?.length || 0, icon: 'bi-book-half', iconColor: '#f97316' }
+    { label: 'អ្នកប្រើប្រាស់សរុប', value: dashboardStore.totalUsers || 0, icon: 'bi-people-fill', iconColor: '#3b82f6' },
+    { label: 'ជំនាញសរុប', value: skillStore.skills?.length || 0, icon: 'bi-lightbulb-fill', iconColor: '#a855f7' },
+    { label: 'សាលាសរុប', value: schoolStore.schools?.length || 0, icon: 'bi-building-fill', iconColor: '#10b981' },
+    { label: 'កម្រិតសរុប', value: degreeStore.degrees?.length || 0, icon: 'bi-mortarboard-fill', iconColor: '#f59e0b' },
+    { label: 'ប្រភេទសរុប', value: categoryStore.categories?.length || 0, icon: 'bi-folder-fill', iconColor: '#06b6d4' },
+    { label: 'មុខវិជ្ជាសរុប', value: subjectStore.subjects?.length || 0, icon: 'bi-book-half', iconColor: '#f97316' }
 ])
 
-// 5. LIVE BAR CHART DATA (Formatted as [{label, height}] to fix your chart)
 const liveChartData = computed(() => [
-    { label: 'Skills', height: skillStore.skills?.length || 0 },
-    { label: 'Schools', height: schoolStore.schools?.length || 0 },
-    { label: 'Degrees', height: degreeStore.degrees?.length || 0 },
-    { label: 'Categories', height: categoryStore.categories?.length || 0 },
-    { label: 'Subjects', height: subjectStore.subjects?.length || 0 }
+    { label: 'ជំនាញ', height: skillStore.skills?.length || 0 },
+    { label: 'សាលា', height: schoolStore.schools?.length || 0 },
+    { label: 'កម្រិត', height: degreeStore.degrees?.length || 0 },
+    { label: 'ប្រភេទ', height: categoryStore.categories?.length || 0 },
+    { label: 'មុខវិជ្ជា', height: subjectStore.subjects?.length || 0 }
 ])
 
-// 6. LIVE RECENT SECTIONS MAPPING
 const liveRecentSections = computed(() => [
-    { title: 'Recent Users', icon: 'bi-people-fill', color: '#3b82f6', data: dashboardStore.newestUsers || [], route: '/users' },
-    { title: 'Recent Skills', icon: 'bi-lightbulb-fill', color: '#a855f7', data: skillStore.skills?.slice(0, 4) || [], route: '/skills' },
-    { title: 'Recent Schools', icon: 'bi-building-fill', color: '#10b981', data: schoolStore.schools?.slice(0, 4) || [], route: '/schools' },
-    { title: 'Recent Degrees', icon: 'bi-mortarboard-fill', color: '#f59e0b', data: degreeStore.degrees?.slice(0, 4) || [], route: '/degrees' },
-    { title: 'Recent Categories', icon: 'bi-folder-fill', color: '#06b6d4', data: categoryStore.categories?.slice(0, 4) || [], route: '/category' },
-    { title: 'Recent Subjects', icon: 'bi-book-half', color: '#f97316', data: subjectStore.subjects?.slice(0, 4) || [], route: '/subjects' }
+    { title: 'អ្នកប្រើប្រាស់ថ្មីៗ', icon: 'bi-people-fill', color: '#3b82f6', data: dashboardStore.newestUsers || [], route: '/users' },
+    { title: 'ជំនាញថ្មីៗ', icon: 'bi-lightbulb-fill', color: '#a855f7', data: skillStore.skills?.slice(0, 4) || [], route: '/skills' },
+    { title: 'សាលាថ្មីៗ', icon: 'bi-building-fill', color: '#10b981', data: schoolStore.schools?.slice(0, 4) || [], route: '/schools' },
+    { title: 'កម្រិតថ្មីៗ', icon: 'bi-mortarboard-fill', color: '#f59e0b', data: degreeStore.degrees?.slice(0, 4) || [], route: '/degrees' },
+    { title: 'ប្រភេទថ្មីៗ', icon: 'bi-folder-fill', color: '#06b6d4', data: categoryStore.categories?.slice(0, 4) || [], route: '/category' },
+    { title: 'មុខវិជ្ជាថ្មីៗ', icon: 'bi-book-half', color: '#f97316', data: subjectStore.subjects?.slice(0, 4) || [], route: '/subjects' }
 ])
 
 const formattedDate = computed(() => new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }))
@@ -213,7 +203,6 @@ const handleQuickAction = (label) => {
 </script>
 
 <style scoped>
-/* ALL STYLES REMAIN EXACTLY THE SAME AS YOUR ORIGINAL */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 .skeleton-text, .skeleton-box, .skeleton-circle, .skeleton-circle-sm, .skeleton-card, .skeleton-action-tile, .skeleton-row-premium { background: #18181b; position: relative; overflow: hidden; border: none; }

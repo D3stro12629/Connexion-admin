@@ -39,7 +39,7 @@ const createCategory = async (payload) => {
       return res.data;
     } catch (err) {
       console.error("Create Error:", err);
-      throw err; // THIS IS IMPORTANT
+      throw err; 
     } finally {
       isProcessing.value = false;
     }
@@ -54,8 +54,7 @@ const createCategory = async (payload) => {
         formData.append('image', payload.image);
       }
 
-      // Add this for images to work on Update
-      formData.append('_method', 'PUT');
+      formData.append('_method', 'POST');
 
       const res = await api.post(`/api/categories/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -63,7 +62,7 @@ const createCategory = async (payload) => {
       return res.data;
     } catch (err) {
       console.error("Edit Error:", err);
-      throw err; // THIS IS IMPORTANT
+      throw err; 
     } finally {
       isProcessing.value = false;
     }

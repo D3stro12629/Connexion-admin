@@ -19,11 +19,9 @@ const isSidebarOpen = ref(true);
 </template>
 
 <style>
-/* Ensure the confirmation modal is above the profile modal */
 :deep(.confirm-modal-backdrop) {
-    z-index: 10000 !important; /* One level higher than your 9999 */
+    z-index: 10000 !important; 
 }
-/* 1. Global reset to prevent any hidden margins from causing overflow */
 html,
 body {
     margin: 0;
@@ -31,7 +29,6 @@ body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    /* Kill horizontal scroll globally */
     background-color: #020617;
 }
 
@@ -44,9 +41,7 @@ body {
     flex-direction: column;
     height: 100vh;
     width: 100%;
-    /* Use 100% instead of 100vw */
     overflow: hidden;
-    /* Keeps the main structure rigid */
 }
 
 .body-wrapper {
@@ -59,16 +54,12 @@ body {
 .main-content {
     flex: 1;
     min-width: 0;
-    /* CRITICAL FIX: prevents flex child from growing larger than parent */
     padding: 25px;
     background-color: #020617;
     overflow-y: auto;
-    /* Only vertical scroll allowed here */
     overflow-x: hidden;
-    /* Extra safety */
 }
 
-/* Global Resets */
 * {
     margin: 0;
     padding: 0;

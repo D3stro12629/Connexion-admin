@@ -7,14 +7,13 @@ const confirmState = reactive({
     message: '',
     confirmText: 'Confirm',
     cancelText: 'Cancel',
-    type: 'warning', // warning, danger, info
+    type: 'warning', 
     onConfirm: null,
     onCancel: null,
 })
 
 export function useConfirm() {
     /**
-     * Show confirmation dialog
      * @param {Object} options - Dialog configuration
      * @param {string} options.title - Dialog title
      * @param {string} options.message - Dialog message
@@ -47,9 +46,6 @@ export function useConfirm() {
         })
     }
 
-    /**
-     * Confirm action
-     */
     const confirm = async () => {
         if (confirmState.onConfirm) {
             try {
@@ -61,9 +57,6 @@ export function useConfirm() {
         close()
     }
 
-    /**
-     * Cancel action
-     */
     const cancel = () => {
         if (confirmState.onCancel) {
             confirmState.onCancel()
@@ -71,9 +64,6 @@ export function useConfirm() {
         close()
     }
 
-    /**
-     * Close dialog
-     */
     const close = () => {
         confirmState.isVisible = false
         confirmState.onConfirm = null

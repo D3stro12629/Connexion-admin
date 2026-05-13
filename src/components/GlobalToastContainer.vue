@@ -2,7 +2,6 @@
 import { useToast } from '@/composables/useToast'
 import BaseToast from '@/components/ui/base/BaseToast.vue'
 
-// This component "listens" to the readonly toasts array
 const { toasts, remove } = useToast()
 </script>
 
@@ -26,6 +25,4 @@ const { toasts, remove } = useToast()
     flex-direction: column;
     gap: 10px;
 }
-
-/* Transitions here... */
 </style>

@@ -7,14 +7,14 @@
         <div class="app-logo">
           <i class="bi bi-shield-lock-fill"></i>
         </div>
-        <h1 class="login-title">Welcome back</h1>
-        <p class="login-subtitle">Please enter your details</p>
+        <h1 class="login-title">សូមស្វាគមន៍</h1>
+        <p class="login-subtitle">សូមបញ្ចូលព័ត៌មានរបស់អ្នក</p>
       </div>
 
       <form @submit.prevent="handleLogin" class="login-form">
         <!-- Email/Phone Field -->
         <div class="input-group-wrapper">
-          <label class="field-label">Email</label>
+          <label class="field-label">អ៊ីម៉ែល</label>
           <div :class="['custom-input-box', { 'input-error': errors.email_or_phone }]">
             <i class="bi bi-person input-icon"></i>
             <input
@@ -30,7 +30,7 @@
         <!-- Password Field -->
         <div class="input-group-wrapper">
           <div class="label-row">
-            <label class="field-label">Password</label>
+            <label class="field-label">ពាក្យសម្ងាត់</label>
           </div>
           <div :class="['custom-input-box', { 'input-error': errors.password }]">
             <i class="bi bi-lock input-icon"></i>
@@ -58,7 +58,7 @@
         <!-- Submit Button -->
         <button :disabled="isLoading" type="submit" class="btn-primary-login">
           <span v-if="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-          <span>{{ isLoading ? 'Checking...' : 'Sign In' }}</span>
+          <span>{{ isLoading ? 'កំពុងត្រួតពិនិត្យ...' : 'ចូលគណនី' }}</span>
         </button>
       </form>
 
@@ -92,18 +92,18 @@ const detectedRole = computed(() => {
 // ── Validation 
 const validate = () => {
   if (!credentials.email_or_phone.trim()) {
-    errors.email_or_phone = 'Required'
+    errors.email_or_phone = 'ត្រូវបំពេញ'
   } else if (!credentials.email_or_phone.includes('@gmail.com')) {
-    errors.email_or_phone = 'Please enter a valid Gmail address'
+    errors.email_or_phone = 'សូមបញ្ចូលអាសយដ្ឋាន Gmail ដែលត្រឹមត្រូវ'
   } else {
     errors.email_or_phone = ''
   }
 
   const numberCount = (credentials.password.match(/\d/g) || []).length
   if (!credentials.password.trim()) {
-    errors.password = 'Required'
+    errors.password = 'ត្រូវបំពេញ'
   } else if (numberCount < 4) {
-    errors.password = 'Password must contain at least 4 numbers'
+    errors.password = 'ពាក្យសម្ងាត់ត្រូវបានរកឃើញយ៉ាងហោច 4 លេខ'
   } else {
     errors.password = ''
   }

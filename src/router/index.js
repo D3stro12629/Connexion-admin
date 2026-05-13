@@ -4,8 +4,7 @@ import { useAuthStore } from '@/stores/auth'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // Redirect root path to dashboard
-    // The Navigation Guard will intercept this and send them to /login if needed
+
     {
       path: '/',
       redirect: '/dashboard',
@@ -76,7 +75,6 @@ const router = createRouter({
       component: () => import('../views/HelpView.vue'),
       meta: { requiresAuth: true, title: 'Help' }
     },
-    // 404 Not Found Page
     {
       path: "/:catchAll(.*)",
       name: "page.404",
@@ -86,29 +84,19 @@ const router = createRouter({
   ],
 })
 
-/**
- * NAVIGATION GUARD
- * Logic: 
- * 1. If trying to access a restricted page without a token -> Redirect to Login
- * 2. If trying to access Login while already having a token -> Redirect to Dashboard
- */
+
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'Admin Dashboard';
-  const authStore = useAuthStore()
-  
-  // Check token from store or localStorage (for persistence on refresh)
+  const authStore = useAuthStore();
   const token = authStore.token || localStorage.getItem('token');
   const isAuthenticated = !!token;
 
-  // Case 1: User is not logged in and tries to access any page except Login
   if (to.name !== 'login' && !isAuthenticated) {
     next({ name: 'login' });
   } 
-  // Case 2: User is already logged in and tries to go to the Login page
   else if (to.name === 'login' && isAuthenticated) {
     next({ name: 'dashboard' });
   } 
-  // Case 3: Allow the navigation
   else {
     next();
   }

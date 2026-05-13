@@ -8,14 +8,14 @@
                     <div :class="['nav-item dashboard-btn', { 'active': isActive('/dashboard') }]"
                         @click="navigateTo('/dashboard')" :title="!isOpen ? 'Dashboard' : ''">
                         <span class="material-icons">home</span>
-                        <span v-if="isOpen" class="nav-label">Dashboard</span>
+                        <span v-if="isOpen" class="nav-label">ផ្ទាំងគ្រប់គ្រង</span>
                     </div>
 
                     <!-- Settings Dropdown -->
                     <div :class="['nav-item', { 'parent-active': isRouteInSettings }]" @click="toggleSettings"
                         :title="!isOpen ? 'Settings' : ''">
                         <span class="material-icons">settings</span>
-                        <span v-if="isOpen" class="nav-label">Settings</span>
+                        <span v-if="isOpen" class="nav-label">ការកំណត់</span>
                         <span v-if="isOpen" class="material-icons arrow-icon">
                             {{ isSettingsExpanded ? 'expand_more' : 'chevron_right' }}
                         </span>
@@ -40,19 +40,19 @@
                     <div :class="['nav-item', { 'active': isActive('/profile') }]" @click="navigateTo('/profile')"
                         :title="!isOpen ? 'Profile' : ''">
                         <span class="material-icons">person</span>
-                        <span v-if="isOpen" class="nav-label">Profile</span>
+                        <span v-if="isOpen" class="nav-label">ប្រវត្តិរូប</span>
                     </div>
 
                     <div :class="['nav-item', { 'active': isActive('/help') }]" @click="navigateTo('/help')"
                         :title="!isOpen ? 'Help' : ''">
                         <span class="material-icons">help_outline</span>
-                        <span v-if="isOpen" class="nav-label">Help & Support</span>
+                        <span v-if="isOpen" class="nav-label">ជំនួយ & គាំទ្រ</span>
                     </div>
 
 
                     <div class="nav-item logout-item" @click="showLogoutModal = true" :title="!isOpen ? 'Logout' : ''">
                         <span class="material-icons">logout</span>
-                        <span v-if="isOpen" class="nav-label">Logout</span>
+                        <span v-if="isOpen" class="nav-label">ចាកចេញ</span>
                     </div>
 
                 </nav>
@@ -66,12 +66,12 @@
             <div v-if="showLogoutModal" class="modal-overlay" @click.self="showLogoutModal = false">
                 <div class="modal-card">
                     <div class="modal-icon"><span class="material-icons">security</span></div>
-                    <h3>Security Check</h3>
-                    <p>Are you sure you want to end your session?</p>
+                    <h3>សុវត្ថិភាព</h3>
+                    <p>តើអ្នកប្រាកដទេថាចាកចេញពីគណនី?</p>
                     <div class="modal-btns">
-                        <button class="btn-back" @click="showLogoutModal = false">Cancel</button>
+                        <button class="btn-back" @click="showLogoutModal = false">បោះបង់</button>
 
-                        <button class="btn-out" @click="handleLogout">Logout</button>
+                        <button class="btn-out" @click="handleLogout">ចាកចេញ</button>
                     </div>
                 </div>
             </div>
@@ -340,12 +340,12 @@ const isSettingsExpanded = ref(false);
 const showLogoutModal = ref(false);
 
 const settingsItems = [
-    { name: 'Users', icon: 'group', path: '/users' },
-    { name: 'Categories', icon: 'category', path: '/category' },
-    { name: 'Degree', icon: 'workspace_premium', path: '/degrees' },
-    { name: 'Schools', icon: 'school', path: '/schools' },
-    { name: 'Skills', icon: 'psychology', path: '/skills' },
-    { name: 'Subjects', icon: 'book', path: '/subjects' },
+    { name: 'អ្នកប្រើប្រាស់', icon: 'group', path: '/users' },
+    { name: 'ប្រភេទ', icon: 'category', path: '/category' },
+    { name: 'កម្រិត', icon: 'workspace_premium', path: '/degrees' },
+    { name: 'សាលា', icon: 'school', path: '/schools' },
+    { name: 'ជំនាញ', icon: 'psychology', path: '/skills' },
+    { name: 'មុខវិជ្ជា', icon: 'book', path: '/subjects' },
 ];
 
 // --- LOGIC ---

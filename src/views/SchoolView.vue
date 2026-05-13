@@ -7,34 +7,34 @@
         <div class="header-content">
           <div class="title-stack">
             <h1>
-              Schools
+              សាលារៀន
               <span class="count-chip" v-if="!schoolStore.isLoading">
-                {{ schoolStore.schools?.length || 0 }} Total
+                {{ schoolStore.schools?.length || 0 }} សរុប
               </span>
             </h1>
-            <p class="subtitle-text">Manage and monitor your educational institutions</p>
+            <p class="subtitle-text">គ្រប់គ្រង និងតាមដានសាលារៀនរបស់អ្នក</p>
           </div>
 
           <div class="header-actions">
             <div class="action-group">
               <div class="search-wrapper">
                 <i class="bi bi-search search-icon"></i>
-                <input v-model="searchQuery" type="text" placeholder="Search schools..." />
+                <input v-model="searchQuery" type="text" placeholder="ស្វែងរកសាលារៀន..." />
                 <div class="search-shortcut">⌘K</div>
               </div>
               <button class="primary-add-btn" @click="openCreateModal">
                 <i class="bi bi-plus-lg"></i>
-                <span>Add School</span>
+                <span>បន្ថែមសាលា</span>
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- 2. BENTO STATS SECTION (SKELETON INTEGRATED) -->
+      <!-- 2. BENTO STATS SECTION -->
       <section class="stats-row">
         <template v-if="schoolStore.isLoading">
-          <div v-for="i in 3" :key="'stat-s-' + i" class="stat-card">
+          <div v-for="i in 2" :key="'stat-s-' + i" class="stat-card">
             <BaseSkeleton width="56px" height="56px" radius="18px" />
             <div class="stat-data">
               <BaseSkeleton width="70px" height="12px" radius="4px" style="margin-bottom: 8px; display: block;" />
@@ -46,38 +46,30 @@
           <div class="stat-card">
             <div class="stat-icon blue"><i class="bi bi-building-fill"></i></div>
             <div class="stat-data">
-              <span class="label">Total Items</span>
+              <span class="label">ចំនួនសរុប</span>
               <span class="value">{{ schoolStore.schools?.length || 0 }}</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon green"><i class="bi bi-patch-check-fill"></i></div>
-            <div class="stat-data">
-              <span class="label">Active Now</span>
-              <span class="value">{{ activeCount }}</span>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-icon purple"><i class="bi bi-lightning-fill"></i></div>
             <div class="stat-data">
-              <span class="label">Recently Added</span>
+              <span class="label">បន្ថែមថ្មី</span>
               <span class="value">{{ newlyAddedCount }}</span>
             </div>
           </div>
         </template>
       </section>
 
-      <!-- 3. MAIN TABLE SECTION (SKELETON INTEGRATED) -->
+      <!-- 3. MAIN TABLE SECTION -->
       <main class="content-wrapper">
         <div class="table-container">
           <table class="premium-table">
             <thead>
               <tr>
-                <th class="col-id">ID</th>
-                <th class="col-name">School Name</th>
-                <th class="col-status">Current Status</th>
-                <th class="col-date">Created Date</th>
-                <th class="col-actions text-end">Actions</th>
+                <th class="col-id">ល.រ</th>
+                <th class="col-name">ឈ្មោះសាលា</th>
+                <th class="col-date">កាលបរិច្ឆេទបង្កើត</th>
+                <th class="col-actions text-end">ការកំណត់</th>
               </tr>
             </thead>
             <tbody>
@@ -91,9 +83,6 @@
                       <BaseSkeleton width="44px" height="44px" radius="12px" />
                       <BaseSkeleton width="220px" height="16px" radius="4px" />
                     </div>
-                  </td>
-                  <td>
-                    <BaseSkeleton width="80px" height="24px" radius="10px" />
                   </td>
                   <td>
                     <BaseSkeleton width="110px" height="16px" radius="4px" />
@@ -116,11 +105,6 @@
                       <span class="name-text" :title="item.name">{{ item.name }}</span>
                     </div>
                   </td>
-                  <td class="col-status">
-                    <span class="status-pill" :class="getStatusClass(item.status)">
-                      {{ item.status || 'Active' }}
-                    </span>
-                  </td>
                   <td class="col-date">
                     <span class="date-text">{{ formatDate(item.created_at) }}</span>
                   </td>
@@ -138,19 +122,22 @@
               </template>
             </tbody>
           </table>
-
-          <footer v-if="totalEntries > 0" class="premium-pagination-footer">
-            <div class="pagination-left">
-              <p class="entries-text">
-                Showing <span class="mono-num">{{ showingStart }}</span>
-                to <span class="mono-num">{{ showingEnd }}</span>
-                of <span class="mono-num total">{{ totalEntries }}</span> entries
-              </p>
-            </div>
-            <div class="pagination-right">
-              <BasePagination v-model:page="currentPage" :per-page="itemsPerPage" :total-items="totalEntries" />
-            </div>
-          </footer>
+<footer v-if="totalEntries > 0" class="premium-pagination-footer">
+  <div class="pagination-left">
+    <p class="entries-text">
+      កំពុងបង្ហាញ <span class="highlight-num">{{ showingStart }}</span>
+      ដល់ <span class="highlight-num">{{ showingEnd }}</span>
+      នៃ <span class="highlight-num">{{ totalEntries }}</span> ទិន្នន័យសរុប
+    </p>
+  </div>
+  <div class="pagination-right">
+    <BasePagination 
+      v-model:page="currentPage" 
+      :per-page="itemsPerPage" 
+      :total-items="totalEntries" 
+    />
+  </div>
+</footer>
         </div>
       </main>
 
@@ -165,20 +152,22 @@
               <div class="modal-content compact-padding">
                 <div class="modal-header-clean">
                   <div class="icon-circle compact"><i class="bi bi-building-fill"></i></div>
-                  <h2>{{ isEditing ? 'Update School' : 'Add School' }}</h2>
+                  <h2>{{ isEditing ? 'កែប្រែ​សាលា' : 'បន្ថែម​សាលា' }}</h2>
                 </div>
                 <div class="form-body">
                   <div class="input-group-custom">
-                    <label>School Name</label>
+                    <label>ឈ្មោះសាលា</label>
                     <input v-model="form.name" placeholder="e.g. ANT University"
                       :class="{ 'has-error': errors.name }" @blur="validate('name')" />
                     <span v-if="errors.name" class="error-msg">{{ errors.name }}</span>
                   </div>
                 </div>
                 <div class="modal-footer-refined">
-                  <button class="btn-secondary" @click="showFormModal = false">Cancel</button>
-                  <button class="btn-primary" :disabled="schoolStore.isProcessing" @click="saveSchool">Save
-                    Changes</button>
+                  <button class="btn-secondary" @click="showFormModal = false">បោះបង់</button>
+                  <button class="btn-primary" :disabled="schoolStore.isProcessing" @click="saveSchool">
+                    <span v-if="schoolStore.isProcessing" class="spinner-border spinner-border-sm me-2"></span>
+                    {{ isEditing ? 'កែប្រែ' : 'បន្ថែម' }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -194,15 +183,16 @@
               <div class="modal-content compact-padding">
                 <div class="modal-header-clean">
                   <div class="icon-circle compact danger"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                  <h2>Delete?</h2>
+                  <h2>លុប?</h2>
                 </div>
                 <div class="delete-warning">
-                  <p>Are you sure you want to remove <strong>"{{ selectedItem?.name }}"</strong>?</p>
+                  <p>តើអ្នកប្រាកដថាចង់លុប <strong>"{{ selectedItem?.name }}"</strong>ចេញមែនទេ?</p>
                 </div>
                 <div class="modal-footer-refined">
-                  <button class="btn-secondary" @click="showDeleteModal = false">No</button>
-                  <button class="btn-danger" :disabled="schoolStore.isProcessing" @click="confirmDelete">Yes,
-                    Delete</button>
+                  <button class="btn-secondary" @click="showDeleteModal = false">ទេ</button>
+                  <button class="btn-danger" :disabled="schoolStore.isProcessing" @click="confirmDelete">
+                      <span v-if="schoolStore.isProcessing" class="spinner-border spinner-border-sm me-2"></span>
+                    យល់ព្រម</button>
                 </div>
               </div>
             </div>
@@ -218,16 +208,13 @@
               <div class="modal-content compact-padding">
                 <div class="modal-header-clean">
                   <div class="icon-circle compact detail"><i class="bi bi-info-circle-fill"></i></div>
-                  <h2>Details</h2>
+                  <h2>ព័ត៌មានលម្អិត</h2>
                 </div>
                 <div class="info-grid-simple">
-                  <div class="info-box full"><label>School Name</label>
+                  <div class="info-box full"><label>ឈ្មោះសាលា</label>
                     <p class="large-text">{{ selectedItem?.name }}</p>
                   </div>
-                  <div class="info-box"><label>Status</label>
-                    <p><span class="status-pill status-active">{{ selectedItem?.status || 'Active' }}</span></p>
-                  </div>
-                  <div class="info-box"><label>Created At</label>
+                  <div class="info-box full"><label>កាលបរិច្ឆេទបង្កើត</label>
                     <p class="date-visible">{{ formatDate(selectedItem?.created_at) }}</p>
                   </div>
                 </div>
@@ -243,10 +230,11 @@
     </div>
   </DashboardLayout>
 </template>
+
 <script setup>
 import { ref, computed, onMounted, reactive, watch, onUnmounted } from 'vue'
 import { useSchoolStore } from '@/stores/schools'
-import { useRoute } from 'vue-router' // Added
+import { useRoute } from 'vue-router'
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import BaseSkeleton from '@/components/ui/base/BaseSkeleton.vue'
 import BasePagination from '@/components/ui/base/BasePagination.vue'
@@ -254,7 +242,7 @@ import { useFormValidation, validationRules } from '@/composables/useFormValidat
 import { useToast } from '@/composables/useToast'
 
 const schoolStore = useSchoolStore()
-const route = useRoute() // Added
+const route = useRoute()
 const toast = useToast()
 const searchQuery = ref('')
 const showFormModal = ref(false), showDetailsModal = ref(false), showDeleteModal = ref(false)
@@ -265,7 +253,6 @@ const { errors, validateField: validate, validate: validateAll, reset: resetVali
   name: [validationRules.required('School name is required')]
 })
 
-// MODIFIED LIFECYCLE
 onMounted(async () => {
   await schoolStore.fetchSchools()
   if (route.query.action === 'create') {
@@ -277,7 +264,6 @@ onMounted(async () => {
 const totalEntries = computed(() => filteredSchools.value.length)
 const showingStart = computed(() => totalEntries.value === 0 ? 0 : (currentPage.value - 1) * itemsPerPage.value + 1)
 const showingEnd = computed(() => Math.min(currentPage.value * itemsPerPage.value, totalEntries.value))
-const activeCount = computed(() => (schoolStore.schools || []).length)
 const newlyAddedCount = computed(() => {
   const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7)
   return (schoolStore.schools || []).filter(s => new Date(s.created_at) > weekAgo).length
@@ -313,7 +299,6 @@ const confirmDelete = async () => {
 }
 
 const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'
-const getStatusClass = (s) => (!s || s === 'Active') ? 'status-active' : 'status-pending'
 
 // WATCHERS
 watch(searchQuery, () => currentPage.value = 1)
@@ -327,6 +312,10 @@ onUnmounted(() => document.body.style.overflow = '')
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
+.modal-header-clean h2 {
+  width: 100%;
+  text-align: center;
+}
 .premium-shell {
   --bg: #09090b;
   --surface: #121215;
@@ -452,7 +441,7 @@ onUnmounted(() => document.body.style.overflow = '')
 /* Stats */
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
@@ -481,11 +470,6 @@ onUnmounted(() => document.body.style.overflow = '')
 .stat-icon.blue {
   background: rgba(99, 102, 241, 0.1);
   color: var(--accent);
-}
-
-.stat-icon.green {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22c55e;
 }
 
 .stat-icon.purple {
@@ -548,10 +532,6 @@ onUnmounted(() => document.body.style.overflow = '')
   width: auto;
 }
 
-.col-status {
-  width: 150px;
-}
-
 .col-date {
   width: 180px;
 }
@@ -595,20 +575,6 @@ onUnmounted(() => document.body.style.overflow = '')
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.status-pill {
-  padding: 5px 12px;
-  border-radius: 8px;
-  font-size: 0.65rem;
-  font-weight: 800;
-  border: 1px solid currentColor;
-  text-transform: uppercase;
-}
-
-.status-active {
-  background: rgba(34, 197, 94, 0.1);
-  color: #34d399;
 }
 
 .date-text {
@@ -781,7 +747,7 @@ onUnmounted(() => document.body.style.overflow = '')
 
 .info-grid-simple {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
@@ -850,6 +816,75 @@ onUnmounted(() => document.body.style.overflow = '')
 .premium-modal-leave-to {
   opacity: 0;
   transform: scale(0.9) translateY(20px);
+}
+/* 1. Footer Container */
+.premium-pagination-footer {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  background: transparent;
+}
+
+/* 2. Left Side Text Style */
+.entries-text {
+  color: #71717a !important; /* Muted gray from screenshot */
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.highlight-num {
+  color: #ffffff; /* White numbers */
+  font-weight: 700;
+  margin: 0 2px;
+}
+
+/* 3. Pagination Button Style (The White Blocks) */
+:deep(.pagination-right .pagination-container),
+:deep(.pagination-right ul) {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+:deep(.pagination-right button),
+:deep(.pagination-right .page-link) {
+  background: #ffffff !important; /* Pure white background */
+  color: #000000 !important;    /* Pure black text */
+  border: none !important;
+  border-radius: 8px !important;  /* Rounded corners */
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+/* Hover effect for the button */
+:deep(.pagination-right button:hover) {
+  transform: scale(1.05);
+  background: #f4f4f5 !important;
+}
+
+/* Specifically style the active page if your component uses an 'active' class */
+:deep(.pagination-right .active button),
+:deep(.pagination-right .is-active button) {
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 0 0 2px var(--accent); /* Subtle glow to show it's selected */
+}
+
+/* Hide Prev/Next arrows if you want it exactly like the screenshot */
+:deep(.pagination-right .prev-btn),
+:deep(.pagination-right .next-btn) {
+  display: none !important;
 }
 
 @media (max-width: 992px) {

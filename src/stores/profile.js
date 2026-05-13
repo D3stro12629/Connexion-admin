@@ -1,18 +1,23 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import api from "@/api/https";
+import { useAuthStore } from "./auth"; // ✅ Import Auth Store
 
 export const useProfileStore = defineStore("profile", () => {
   const user = ref(null);
   const isLoading = ref(false);
   const isProcessing = ref(false);
-
   const fetchProfile = async () => {
     isLoading.value = true;
     try {
       const res = await api.get("/api/profile");
-      user.value = res.data.data;
-      return res.data.data;
+      const profileData = res.data.data;
+      user.value = profileData;
+
+      const authStore = useAuthStore();
+      authStore.updateUser(profileData);
+
+      return profileData;
     } catch (error) {
       console.error("Failed to fetch profile:", error);
       throw error;
@@ -26,16 +31,20 @@ export const useProfileStore = defineStore("profile", () => {
     try {
       const formData = new FormData();
       formData.append("avatar", file);
-      const res = await api.post("/api/profile/avatar", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      await api.post("/api/profile/avatar", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      await fetchProfile();
-      return res.data;
-    } catch (error) {
-      console.error("Failed to upload avatar:", error);
-      throw error;
+      await fetchProfile(); // Syncs Navbar
+    } finally {
+      isProcessing.value = false;
+    }
+  };
+
+  const removeAvatar = async () => {
+    isProcessing.value = true;
+    try {
+      await api.delete("/api/profile/avatar");
+      await fetchProfile(); 
     } finally {
       isProcessing.value = false;
     }
@@ -46,56 +55,24 @@ export const useProfileStore = defineStore("profile", () => {
     try {
       const formData = new FormData();
       formData.append("cover", file);
-      const res = await api.post("/api/profile/cover", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      await api.post("/api/profile/cover", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
       await fetchProfile();
-      return res.data;
-    } catch (error) {
-      console.error("Failed to upload cover:", error);
-      throw error;
     } finally {
       isProcessing.value = false;
     }
   };
 
-  const removeAvatar = async () => {
+  const removeCover = async () => {
     isProcessing.value = true;
     try {
-      const res = await api.delete("/api/profile/avatar");
+      await api.delete("/api/profile/cover");
       await fetchProfile();
-      return res.data;
-    } catch (error) {
-      console.error("Failed to remove avatar:", error);
-      throw error;
     } finally {
       isProcessing.value = false;
     }
   };
-
-// ... inside useProfileStore ...
-const removeCover = async () => {
-    isProcessing.value = true;
-    try {
-      const res = await api.delete("/api/profile/cover");
-      console.log(res);
-      
-      // Force the local user state to null so the header updates
-      if (user.value) {
-        user.value.cover = null;
-      }
-      
-      await fetchProfile(); // Optional: Sync with server
-      return res.data;
-    } catch (error) {
-      console.error("Store error:", error);
-      throw error;
-    } finally {
-      isProcessing.value = false;
-    }
-};
 
   const updatePersonalInfo = async (payload) => {
     isProcessing.value = true;
@@ -106,31 +83,10 @@ const removeCover = async () => {
           params.append(key, payload[key]);
         }
       });
-
-      const res = await api.put("/api/profile/info", params, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+      await api.put("/api/profile/info", params, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
       await fetchProfile();
-      return res.data;
-    } catch (error) {
-      console.error("Failed to update personal info:", error);
-      throw error;
-    } finally {
-      isProcessing.value = false;
-    }
-  };
-
-  const updateProfessionalInfo = async (payload) => {
-    isProcessing.value = true;
-    try {
-      const res = await api.put("/api/profile/professional", payload);
-      await fetchProfile();
-      return res.data;
-    } catch (error) {
-      console.error("Failed to update professional info:", error);
-      throw error;
     } finally {
       isProcessing.value = false;
     }
@@ -145,31 +101,17 @@ const removeCover = async () => {
       params.append("new_pass_confirmation", payload.new_pass_confirmation);
 
       const res = await api.put("/api/profile/change-pass", params, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
-      await fetchProfile();
       return res.data;
-    } catch (error) {
-      console.error("Failed to change password:", error);
-      throw error;
     } finally {
       isProcessing.value = false;
     }
   };
 
   return {
-    user,
-    isLoading,
-    isProcessing,
-    fetchProfile,
-    uploadAvatar,
-    uploadCover,
-    removeAvatar,
-    removeCover,
-    updatePersonalInfo,
-    updateProfessionalInfo,
-    changePassword,
+    user, isLoading, isProcessing, fetchProfile,
+    uploadAvatar, uploadCover, removeAvatar, removeCover,
+    updatePersonalInfo, changePassword,
   };
 });

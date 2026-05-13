@@ -5,7 +5,6 @@
 
                 <!-- 1. HEADER SECTION -->
                 <header class="profile-header">
-                    <!-- FIXED: Removed the !isLoading check from @click -->
                     <div class="cover-container" @click="openCoverModal">
                         <!-- SKELETON COVER -->
                         <div v-if="profileStore.isLoading" class="skeleton skeleton-cover"></div>
@@ -15,7 +14,7 @@
                             <div v-else class="cover-placeholder"></div>
                             <div class="cover-overlay">
                                 <i class="bi bi-pencil-square"></i>
-                                <span>Update Cover</span>
+                                <span>{{ profileStore.user?.cover ? 'កែប្រែ​រូបភាព​' : 'បន្ថែម​រូបភាព' }}</span>
                             </div>
                             <span v-if="profileStore.user?.cover" class="delete-cover-span"
                                 @click.stop="showCoverDeleteModal = true">
@@ -27,7 +26,6 @@
 
                     <div class="profile-meta-bar">
                         <div class="avatar-section">
-                            <!-- FIXED: Removed the !isLoading check from @click -->
                             <div class="avatar-outer" @click="triggerUpload">
                                 <!-- SKELETON AVATAR -->
                                 <div v-if="profileStore.isLoading" class="skeleton skeleton-avatar"></div>
@@ -72,7 +70,7 @@
 
                         <div class="header-actions">
                             <button class="edit-core-btn" @click="openEditModal" :disabled="profileStore.isLoading">
-                                <i class="bi bi-cpu"></i> Edit Profile
+                                <i class="bi bi-cpu"></i> កែប្រែ​ព័ត៌មាន
                             </button>
                         </div>
                     </div>
@@ -93,17 +91,17 @@
                     <template v-else>
                         <div class="stat-item">
                             <div class="s-icon purple"><i class="bi bi-shield-check"></i></div>
-                            <div class="s-labels"><span class="s-top">Integrity</span><span class="s-val">{{
+                            <div class="s-labels"><span class="s-top">សុចរិតភាព</span><span class="s-val">{{
                                 profileCompletion }}%</span></div>
                         </div>
                         <div class="stat-item">
                             <div class="s-icon blue"><i class="bi bi-broadcast-pin"></i></div>
-                            <div class="s-labels"><span class="s-top">Status</span><span class="s-val">Active</span>
+                            <div class="s-labels"><span class="s-top">ស្ថានភាព</span><span class="s-val">Active</span>
                             </div>
                         </div>
                         <div class="stat-item">
                             <div class="s-icon green"><i class="bi bi-clock-history"></i></div>
-                            <div class="s-labels"><span class="s-top">Last Sync</span><span class="s-val">{{
+                            <div class="s-labels"><span class="s-top">ពេលវេលាចុងក្រោយ</span><span class="s-val">{{
                                 lastLoginDisplay }}</span></div>
                         </div>
                     </template>
@@ -130,28 +128,28 @@
                                 </template>
 
                                 <template v-else>
-                                    <div class="data-card span-2"><label>Legal Identity</label>
+                                    <div class="data-card span-2"><label>អត្តសញ្ញាណ</label>
                                         <p class="highlight">{{ profileStore.user?.full_name }}</p>
                                     </div>
-                                    <div class="data-card"><label>Comm-Link</label>
+                                    <div class="data-card"><label>អ៊ីមែល</label>
                                         <p>{{ profileStore.user?.email }}</p>
                                     </div>
-                                    <div class="data-card"><label>Frequency</label>
+                                    <div class="data-card"><label>លេខទូរសព្ទ</label>
                                         <p>{{ profileStore.user?.phone || 'Not Set' }}</p>
                                     </div>
-                                    <div class="data-card"><label>Current Sector</label>
+                                    <div class="data-card"><label>ទីកន្លែងបច្ចុប្បន្ន</label>
                                         <p>{{ profileStore.user?.current_city || 'Unknown' }}</p>
                                     </div>
-                                    <div class="data-card"><label>Origin Node</label>
+                                    <div class="data-card"><label>ទីកន្លែងកំណេីត</label>
                                         <p>{{ profileStore.user?.home_town || 'Unknown' }}</p>
                                     </div>
-                                    <div class="data-card"><label>Date of Birth</label>
+                                    <div class="data-card"><label>ថ្ងៃខែឆ្នាំកើត</label>
                                         <p>{{ profileStore.user?.dob || 'Not Set' }}</p>
                                     </div>
-                                    <div class="data-card"><label>Gender</label>
-                                        <p>{{ profileStore.user?.gender === 1 ? 'Male' : profileStore.user?.gender === 2
+                                    <div class="data-card"><label>ភេទ</label>
+                                        <p>{{ profileStore.user?.gender === 1 ? 'ប្រុស' : profileStore.user?.gender === 2
                                             ?
-                                            'Female' : 'Not Set' }}</p>
+                                            'ស្រី' : 'Not Set' }}</p>
                                     </div>
                                 </template>
                             </div>
@@ -164,7 +162,7 @@
                                     style="display: none;" readonly>
 
                                 <div class="input-wrap" :class="{ 'has-error': passwordFormErrors.old_pass }">
-                                    <label>Current Password</label>
+                                    <label>ពាក្យសម្ងាត់បច្ចុប្បន្ន</label>
                                     <div class="password-field-wrapper">
                                         <input :type="showPasswords.old ? 'text' : 'password'"
                                             v-model="passwordForm.old_pass" placeholder="••••••••"
@@ -179,7 +177,7 @@
                                 </div>
 
                                 <div class="input-wrap" :class="{ 'has-error': passwordFormErrors.new_pass }">
-                                    <label>New Password</label>
+                                    <label>ពាក្យសម្ងាត់ថ្មី</label>
                                     <div class="password-field-wrapper">
                                         <input :type="showPasswords.new ? 'text' : 'password'"
                                             v-model="passwordForm.new_pass" placeholder="••••••••"
@@ -195,7 +193,7 @@
 
                                 <div class="input-wrap"
                                     :class="{ 'has-error': passwordFormErrors.new_pass_confirmation }">
-                                    <label>Confirm Password</label>
+                                    <label>បញ្ជាក់ពាក្យសម្ងាត់</label>
                                     <div class="password-field-wrapper">
                                         <input :type="showPasswords.confirm ? 'text' : 'password'"
                                             v-model="passwordForm.new_pass_confirmation" placeholder="••••••••"
@@ -215,7 +213,7 @@
                                         :disabled="profileStore.isProcessing">
                                         <i v-if="!profileStore.isProcessing" class="bi bi-shield-lock"></i>
                                         <span v-else class="spinner-border spinner-border-sm me-2"></span>
-                                        {{ profileStore.isProcessing ? 'Updating...' : 'Update Password' }}
+                                        {{ profileStore.isProcessing ? 'កំពុងកែប្រែ...' : 'កែប្រែពាក្យសម្ងាត់' }}
                                     </button>
                                 </div>
                             </div>
@@ -234,17 +232,17 @@
                                 <div class="env-header-left">
                                     <div class="env-icon-box danger"><i class="bi bi-exclamation-triangle"></i></div>
                                     <div class="env-header-text">
-                                        <h3>Delete Cover Image?</h3>
-                                        <p>Are you sure you want to remove this background?</p>
+                                        <h3>លុប?</h3>
+                                        <p>តើអ្នកប្រាកដថាចង់លុបរូបភាពនេះចេញមែនទេ?</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="env-modal-footer">
                                 <div class="env-footer-row">
-                                    <button class="env-btn-dark" @click="showCoverDeleteModal = false">Cancel</button>
+                                    <button class="env-btn-dark" @click="showCoverDeleteModal = false">ទេ</button>
                                     <button class="env-btn-danger-solid" @click="confirmDeleteCover"
                                         :disabled="profileStore.isProcessing">
-                                        {{ profileStore.isProcessing ? 'Removing...' : 'Delete' }}
+                                        {{ profileStore.isProcessing ? 'ពុងលុប...' : 'យល់ព្រម' }}
                                     </button>
                                 </div>
                             </div>
@@ -261,17 +259,17 @@
                                 <div class="env-header-left">
                                     <div class="env-icon-box danger"><i class="bi bi-exclamation-triangle"></i></div>
                                     <div class="env-header-text">
-                                        <h3>Delete Profile Picture?</h3>
-                                        <p>Are you sure you want to remove this?</p>
+                                        <h3>លុប?</h3>
+                                        <p>តើអ្នកប្រាកដថាចង់លុបរូបភាពនេះចេញមែនទេ?</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="env-modal-footer">
                                 <div class="env-footer-row">
-                                    <button class="env-btn-dark" @click="showAvatarDeleteModal = false">Cancel</button>
+                                    <button class="env-btn-dark" @click="showAvatarDeleteModal = false">ទេ</button>
                                     <button class="env-btn-danger-solid" @click="confirmDeleteAvatar"
                                         :disabled="profileStore.isProcessing">
-                                        {{ profileStore.isProcessing ? 'Deleting...' : 'Delete' }}
+                                        {{ profileStore.isProcessing ? 'ពុងលុប...' : 'យល់ព្រម' }}
                                     </button>
                                 </div>
                             </div>
@@ -287,8 +285,8 @@
                                 <div class="env-header-left">
                                     <div class="env-icon-box"><i class="bi bi-image"></i></div>
                                     <div class="env-header-text">
-                                        <h3>Update Cover Image</h3>
-                                        <p>Modify your cover image</p>
+                                        <h3>បញ្ចូល​រូបភាព</h3>
+                                        <p>កែប្រែរូបភាពរបស់អ្នក</p>
                                     </div>
                                 </div>
                                 <button class="env-close-btn" @click="showCoverModal = false"><i
@@ -300,19 +298,18 @@
                                     <div v-else class="env-empty-preview"><i class="bi bi-cloud-arrow-up"></i></div>
                                 </div>
                                 <button class="env-choose-btn" @click="triggerCoverPicker">
-                                    {{ coverFile ? 'Change Selection' : 'Choose Image' }}
+                                    {{ coverFile ? 'Change Selection' : 'ជ្រើសរើស​រូបភាព' }}
                                 </button>
                                 <p class="env-hint-text">Max file size 5MB. Recommended size 1200×400.</p>
                             </div>
                             <div class="env-modal-footer">
                                 <div class="env-footer-row">
-                                    <button class="env-btn-dark" @click="showCoverModal = false">Cancel</button>
-                                    <button class="env-btn-dark" @click="openCoverFull" :disabled="!coverPreview">View
-                                        Full</button>
+                                    <button class="env-btn-dark" @click="showCoverModal = false">លុប</button>
+                                    <button class="env-btn-dark" @click="openCoverFull" :disabled="!coverPreview">មេីលរូបភាព</button>
                                 </div>
                                 <button class="env-btn-submit" @click="uploadCoverFile"
                                     :disabled="!coverFile || profileStore.isProcessing">
-                                    {{ profileStore.isProcessing ? 'Uploading...' : 'Update Cover' }}
+                                    {{ profileStore.isProcessing ? 'បញ្ចូលing...' : 'បញ្ចូល' }}
                                 </button>
                             </div>
                         </div>
@@ -324,55 +321,55 @@
                     <div v-if="showEditModal" class="modal-backdrop" @click.self="showEditModal = false">
                         <div class="core-modal-surface">
                             <div class="core-modal-header">
-                                <h3><i class="bi bi-cpu"></i> Core Configuration</h3>
+                                <h3><i class="bi bi-cpu"></i> ព័ត៌មានរបស់អស់លោក</h3>
                                 <button @click="showEditModal = false" class="env-close-btn"><i
                                         class="bi bi-x-lg"></i></button>
                             </div>
                             <div class="core-modal-body">
                                 <div class="core-grid">
                                     <div class="core-input" :class="{ 'has-error': personalFormErrors.full_name }">
-                                        <label>Full Name</label>
+                                        <label>ឈ្មោះ</label>
                                         <input v-model="personalForm.full_name"
                                             @blur="validatePersonalField('full_name')" />
                                         <span class="error-text" v-if="personalFormErrors.full_name">{{
                                             personalFormErrors.full_name }}</span>
                                     </div>
                                     <div class="core-input" :class="{ 'has-error': personalFormErrors.email }">
-                                        <label>Email Address</label>
+                                        <label>អ៊ីម៉ែល</label>
                                         <input v-model="personalForm.email" @blur="validatePersonalField('email')" />
                                         <span class="error-text" v-if="personalFormErrors.email">{{
                                             personalFormErrors.email }}</span>
                                     </div>
                                     <div class="core-input" :class="{ 'has-error': personalFormErrors.phone }">
-                                        <label>Phone</label>
+                                        <label>លេខទូរស័ព្ទ</label>
                                         <input v-model="personalForm.phone" @blur="validatePersonalField('phone')" />
                                         <span class="error-text" v-if="personalFormErrors.phone">{{
                                             personalFormErrors.phone }}</span>
                                     </div>
-                                    <div class="core-input"><label>DOB</label><input v-model="personalForm.dob"
+                                    <div class="core-input"><label>ថ្ងៃខែឆ្នាំកើត</label><input v-model="personalForm.dob"
                                             type="date" /></div>
                                     <div class="core-input">
-                                        <label>Gender</label>
+                                        <label>ភេទ</label>
                                         <select v-model="personalForm.gender">
                                             <option :value="null">Select</option>
                                             <option :value="1">Male</option>
                                             <option :value="2">Female</option>
                                         </select>
                                     </div>
-                                    <div class="core-input"><label>City</label><input
+                                    <div class="core-input"><label>ទីកន្លែងបច្ចុប្បន្ន</label><input
                                             v-model="personalForm.current_city" /></div>
-                                    <div class="core-input"><label>Home Town</label><input
+                                    <div class="core-input"><label>ទីកន្លែងកំណេីត</label><input
                                             v-model="personalForm.home_town" /></div>
-                                    <div class="core-input"><label>Portfolio</label><input
+                                    <div class="core-input"><label>ប្រវត្តិរូប</label><input
                                             v-model="personalForm.portfolio_link" />
                                     </div>
                                 </div>
                             </div>
                             <div class="core-modal-footer">
-                                <button class="env-btn-dark" @click="showEditModal = false">Cancel</button>
+                                <button class="env-btn-dark" @click="showEditModal = false">បោះបង់</button>
                                 <button class="env-btn-primary" @click="savePersonalInfo"
                                     :disabled="profileStore.isProcessing">
-                                    {{ profileStore.isProcessing ? 'Saving...' : 'Save Changes' }}
+                                    {{ profileStore.isProcessing ? 'រក្សាទុកing...' : 'រក្សាទុក' }}
                                 </button>
                             </div>
                         </div>
@@ -414,8 +411,8 @@ const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 const showPasswords = reactive({ old: false, new: false, confirm: false })
 
 const tabs = [
-    { id: 'overview', label: 'Overview', icon: 'bi bi-grid-1x2-fill' },
-    { id: 'security', label: 'Security', icon: 'bi bi-shield-lock-fill' }
+    { id: 'overview', label: 'ទិដ្ឋភាពទូទៅ', icon: 'bi bi-grid-1x2-fill' },
+    { id: 'security', label: 'សុវត្ថិភាព', icon: 'bi bi-shield-lock-fill' }
 ]
 const personalForm = reactive({
     full_name: '', email: '', phone: '', dob: '',
@@ -424,20 +421,21 @@ const personalForm = reactive({
 
 const { errors: personalFormErrors, validate: validateAllPersonal, validateField: validatePersonalField } = useFormValidation(personalForm, {
     full_name: [
-        validationRules.required('Full name is required'),
-        validationRules.maxLength(255, 'Full name must be under 255 characters')
+        validationRules.required('ទាមទារឈ្មោះ'),
+        validationRules.maxLength(255, 'ឈ្មោះត្រូវមានតិចជាង 255 តួអក្សរ')
     ],
     email: [
-        validationRules.required('Email is required'),
+        validationRules.required('ទាមទារអ៊ីម៉ែល'),
         validationRules.email(),
-        validationRules.maxLength(255, 'Email must be under 255 characters')
+        validationRules.maxLength(255, 'អ៊ីម៉ែលត្រូវមានតិចជាង 255 តួអក្សរ')
     ],
     phone: [
-        validationRules.required('Phone is required'),
-        validationRules.maxLength(255, 'Phone must be under 255 characters')
+        validationRules.required('ទាមទារលេខទូរសព្ទ'),
+
+        validationRules.maxLength(255, 'លេខទូរសព្ទត្រូវមានតិចជាង 255 តួអក្សរ')
     ],
     portfolio_link: [
-        validationRules.url('Please enter a valid URL (https://...)')
+        validationRules.url('សូមបញ្ចូល URL ដែលត្រឹមត្រូវ (https://...)')
     ]
 })
 
@@ -453,20 +451,20 @@ const {
     validateField: validatePasswordField,
     reset: resetPasswordValidation
 } = useFormValidation(passwordForm, {
-    old_pass: [validationRules.required('Current password is required')],
+    old_pass: [validationRules.required('ទាមទារពាក្យសម្ងាត់បច្ចុប្បន្ន')], 
     new_pass: [
-        validationRules.required('New password is required'),
-        validationRules.minLength(8, 'Password must be at least 8 characters'),
-        validationRules.maxLength(255, 'Password must be under 255 characters'),
+        validationRules.required('ទាមទារពាក្យសម្ងាត់ថ្មី'), 
+        validationRules.minLength(8, 'ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ 8 តួអក្សរ'),
+        validationRules.maxLength(255, 'ពាក្យសម្ងាត់ត្រូវមានតិចជាង 255 តួអក្សរ'),
         validationRules.pattern(
             '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+$',
-            'Include Upper, Lower, Number, Symbol'
+            'រួមបញ្ចូលអក្សរធំ អក្សរតូច លេខ និងសញ្ញា'
         ),
-        (value) => value !== passwordForm.old_pass || 'Must be different from old password'
+        (value) => value !== passwordForm.old_pass || 'ពាក្យសម្ងាត់ថ្មីមិនអាចដូចនឹងពាក្យសម្ងាត់បច្ចុប្បន្ន'
     ],
     new_pass_confirmation: [
-        validationRules.required('Confirm your password'),
-        (value) => value === passwordForm.new_pass || 'Passwords do not match'
+        validationRules.required('ទាមទារការបញ្ជាក់ពាក្យសម្ងាត់'),
+        (value) => value === passwordForm.new_pass || 'ពាក្យសម្ងាត់មិនត្រូវគ្នា'
     ]
 })
 
@@ -479,14 +477,14 @@ const openEditModal = () => {
 
 const savePersonalInfo = async () => {
     if (!validateAllPersonal()) {
-        toast.error('Please fix validation errors')
+        toast.error('សូមពិនិត្យមើលកំហុស និងព្យាយាមម្តងទៀត')
         return
     }
     try {
         await profileStore.updatePersonalInfo({ ...personalForm })
-        toast.success('Profile information updated')
+        toast.success('ព័ត៌មានបានកែប្រែដោយជោគជ័យ')
         showEditModal.value = false
-    } catch { toast.error('Synchronization failed') }
+    } catch { toast.error('បរាជ័យក្នុងការកែប្រែព័ត៌មានប្រវត្តិរូប') }
 }
 
 const updatePassword = async () => {
@@ -495,15 +493,15 @@ const updatePassword = async () => {
         const res = await profileStore.changePassword(passwordForm)
         if (res?.result === false || res?.success === false || res?.status === false || res?.error || res?.errors) {
             const fieldError = res?.data?.old_pass?.[0] || res?.data?.new_pass?.[0] || res?.data?.new_pass_confirmation?.[0]
-            toast.error(fieldError || res?.message || 'Incorrect current password')
+            toast.error(fieldError || res?.message || 'ពាក្យសម្ងាត់បច្ចុប្បន្នមិនត្រឹមត្រូវ')
             passwordForm.old_pass = ''; passwordForm.new_pass = ''; passwordForm.new_pass_confirmation = ''
             return
         }
-        toast.success(res?.message || 'Security protocol updated')
+        toast.success(res?.message || 'ពាក្យសម្ងាត់បានកែប្រែដោយជោគជ័យ')
         passwordForm.old_pass = ''; passwordForm.new_pass = ''; passwordForm.new_pass_confirmation = ''
         resetPasswordValidation()
     } catch (err) {
-        toast.error(err.response?.data?.message || 'Failed to update security protocol')
+        toast.error(err.response?.data?.message || 'បរាជ័យក្នុងការកែប្រែពាក្យសម្ងាត់')
         passwordForm.old_pass = ''; passwordForm.new_pass = ''; passwordForm.new_pass_confirmation = ''
     }
 }
@@ -511,9 +509,9 @@ const updatePassword = async () => {
 const confirmDeleteAvatar = async () => {
     try {
         await profileStore.removeAvatar()
-        toast.success('Avatar removed successfully')
+        toast.success('រុបរូបភាពបានជោគជ័យ')
         showAvatarDeleteModal.value = false
-    } catch { toast.error('Failed to remove avatar') }
+    } catch { toast.error('លុបអត់កេីត​ bro') }
 }
 
 const triggerUpload = () => fileInput.value.click()
@@ -526,17 +524,17 @@ const handleFileUpload = async (e) => {
         }
         try {
             await profileStore.uploadAvatar(file)
-            toast.success('Avatar uploaded successfully')
-        } catch { toast.error('Avatar upload failed') }
+            toast.success('រូបភាពបានបញ្ចូលដោយជោគជ័យ')
+        } catch { toast.error('បញ្ចូលរូបភាពបានជោគជ័យ') }
     }
 }
 
 const confirmDeleteCover = async () => {
     try {
         await profileStore.removeCover()
-        toast.success('Cover image removed')
+        toast.success('លុបរូបភាពបានជោគជ័យ')
         showCoverDeleteModal.value = false
-    } catch { toast.error('Failed to remove cover') }
+    } catch { toast.error('លុបអត់កេីត​ bro') }
 }
 
 const openCoverModal = () => {
@@ -558,9 +556,9 @@ const uploadCoverFile = async () => {
     if (!coverFile.value) return
     try {
         await profileStore.uploadCover(coverFile.value)
-        toast.success('Cover image uploaded successfully')
+        toast.success('រូបភាពបានបញ្ចូលដោយជោគជ័យ')
         showCoverModal.value = false
-    } catch { toast.error('Upload failed') }
+    } catch { toast.error('បរាជ័យក្នុងការបញ្ចូលរូបភាព') }
 }
 
 const openCoverFull = () => coverPreview.value && window.open(coverPreview.value, '_blank')
@@ -1342,5 +1340,14 @@ watch([showEditModal, showCoverModal, showAvatarDeleteModal, showCoverDeleteModa
     .core-grid {
         grid-template-columns: 1fr;
     }
+}
+</style>
+<style>
+
+.vue-toastification__container,
+.Toastify__toast-container,
+.toast-container,
+.premium-toast-container {
+    z-index: 2147483647 !important;
 }
 </style>

@@ -11,7 +11,6 @@ export const useSkillStore = defineStore("skill", () => {
   const fetchSkills = async (options = {}) => {
     const { force = false } = options;
 
-    // Cache check: Skip if we already have data and not forcing refresh
     if (!force && skills.value.length > 0) return;
 
     try {

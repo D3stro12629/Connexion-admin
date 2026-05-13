@@ -17,11 +17,11 @@ export const useUserStore = defineStore('users', {
     async fetchUsers(page = 1) {
       this.isLoading = true
       try {
-        // Replace with your actual API endpoint
-        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://novia2.csm.linkpc.net'
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
         const response = await axios.get(`${API_BASE_URL}/api/users?page=${page}`)
+        console.log(response);
         
-        // Adjust these mappings based on your actual API response structure
+        
         this.users = response.data.data
         this.pagination = {
           total: response.data.total || response.data.meta?.total || 0,
@@ -31,7 +31,6 @@ export const useUserStore = defineStore('users', {
         }
       } catch (error) {
         console.error('Error fetching users:', error)
-        // Fallback for testing if API fails
         this.users = [] 
       } finally {
         this.isLoading = false

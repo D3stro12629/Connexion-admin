@@ -1,6 +1,5 @@
 <template>
     <div :class="['premium-toast', `toast-${type}`]" role="alert">
-        <!-- Visual Accent: Vertical "Energy" Bar -->
         <div class="toast-accent-bar"></div>
         
         <div class="toast-content">
@@ -21,7 +20,6 @@
             </div>
         </div>
 
-        <!-- Subtle CRT Scanline Effect to match your Profile Page -->
         <div class="toast-scanline"></div>
     </div>
 </template>
@@ -57,14 +55,13 @@ const toastIcon = computed(() => {
 </script>
 
 <style scoped>
-/* MATCHING YOUR DASHBOARD VARIABLES */
 .premium-toast {
     --t-surface: #121215;
     --t-border: #27272a;
     --t-success: #22c55e;
     --t-error: #ef4444;
     --t-warning: #f59e0b;
-    --t-info: #6366f1; /* Your Indigo Accent */
+    --t-info: #6366f1; 
     
     position: relative;
     min-width: 340px;
@@ -79,7 +76,7 @@ const toastIcon = computed(() => {
     font-family: 'Inter', sans-serif;
 }
 
-/* Vertical Energy Bar */
+
 .toast-accent-bar {
     width: 4px;
     flex-shrink: 0;
@@ -142,7 +139,6 @@ const toastIcon = computed(() => {
     transform: rotate(90deg);
 }
 
-/* CRT SCANLINE EFFECT (Matches your Profile Cover) */
 .toast-scanline {
     position: absolute;
     inset: 0;
@@ -151,8 +147,6 @@ const toastIcon = computed(() => {
     pointer-events: none;
     z-index: 1;
 }
-
-/* TYPE SPECIFIC LOGIC */
 
 /* Success - Green */
 .toast-success .toast-accent-bar { background: var(--t-success); box-shadow: 0 0 15px var(--t-success); }
@@ -170,7 +164,6 @@ const toastIcon = computed(() => {
 .toast-info .toast-accent-bar { background: var(--t-info); box-shadow: 0 0 15px var(--t-info); }
 .toast-info .toast-icon-wrapper, .toast-info .toast-label { color: var(--t-info); }
 
-/* Animation Hook for the Container */
 .premium-toast:hover {
     border-color: #3f3f46;
     transform: translateY(-2px);

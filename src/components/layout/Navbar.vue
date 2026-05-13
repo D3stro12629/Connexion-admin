@@ -3,87 +3,68 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 
-// Stores & Navigation
 const authStore = useAuthStore();
 const router = useRouter();
 const emit = defineEmits(['toggleSidebar']);
 
-// --- STATE ---
-const isLoading = ref(true);
+const isLoading = ref(false);
 
-// --- COMPUTED (Linked to Store) ---
+// ✅ COMPUTED: This re-renders instantly when authStore.user changes
 const user = computed(() => ({
     name: authStore.user?.full_name || 'Guest User',
-    role: authStore.user?.role || 'Member',
-    avatar: authStore.user?.avatar || `https://ui-avatars.com/api/?name=${authStore.user?.full_name || 'U'}&background=random`
+    role: authStore.user?.roles?.[0]?.name || 'Member',
+    avatar: authStore.user?.avatar || `https://ui-avatars.com/api/?name=${authStore.user?.full_name || 'U'}&background=6366f1&color=fff`
 }));
 
-// --- ACTIONS ---
 const goToProfile = () => {
     router.push({ name: 'profile' });
 };
 
-// Error handling for broken avatar images
 const onAvatarError = (e) => {
     e.target.src = `https://ui-avatars.com/api/?name=${user.value.name}&background=random`;
 };
 
-// Initialize Profile from Store
-const fetchProfile = async () => {
-    isLoading.value = true;
-    try {
+onMounted(async () => {
+    if (!authStore.user) {
+        isLoading.value = true;
         await authStore.fetchProfile();
-    } catch (error) {
-        console.error("Error fetching profile from store:", error);
-    } finally {
         isLoading.value = false;
     }
-};
-
-onMounted(() => {
-    fetchProfile();
 });
 </script>
 
 <template>
     <nav class="navbar">
-        <!-- LEFT: Brand & Menu -->
         <div class="nav-left">
             <button class="icon-btn menu-btn" @click="emit('toggleSidebar')">
                 <span class="material-icons">menu_open</span>
             </button>
-            
             <div class="brand">
-                <img src="../../../src/assets/logo2.png" alt="" class="brand-logo">
-                <!-- <div class="brand-logo"> -->
-                    <!-- logo image -->
-                        <!-- <span class="material-icons">rocket_launch</span> -->
-                    <!-- <span class="material-icons"><img src="../../../src/assets/logo.jpg" class="material-icons" alt=""></span> -->
-                <!-- </div> -->
+                <img src="@/assets/logo2.png" alt="Logo" class="brand-logo">
                 <span class="brand-name">Connexion</span>
             </div>
         </div>
 
-        <!-- CENTER: Search -->
-        <div class="nav-center">
+        <!-- <div class="nav-center">
             <div class="search-container">
                 <span class="material-icons search-icon">search</span>
                 <input type="text" placeholder="Search dashboard..." />
                 <kbd class="search-kbd">/</kbd>
             </div>
-        </div>
+        </div> -->
 
-        <!-- RIGHT: Profile -->
         <div class="nav-right">
             <div class="profile-card" @click="goToProfile" :class="{ 'is-loading': isLoading }">
                 <div class="profile-text">
-                    <span class="profile-name">{{ isLoading ? 'Loading...' : user.name }}</span>
-                    <span class="profile-role">{{ isLoading ? 'Please wait' : user.role }}</span>
+                    <span class="profile-name">{{ isLoading ? 'កំពុងដំណើរការ...' : user.name }}</span>
+                    <span class="profile-role">{{ isLoading ? 'សូមរងចាំ' : user.role }}</span>
                 </div>
                 
                 <div class="avatar-container">
+                    <!-- ✅ Adding :key forces image refresh on URL change -->
                     <img 
                         v-if="!isLoading" 
+                        :key="user.avatar"
                         :src="user.avatar" 
                         @error="onAvatarError"
                         alt="User Avatar" 

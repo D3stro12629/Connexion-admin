@@ -5,13 +5,13 @@
             <header class="admin-header">
                 <div class="header-content">
                     <div class="title-stack">
-                        <h1>Directory <span class="count-chip" v-if="!isLoading">{{ userStore.pagination.total }}</span></h1>
+                        <h1>សមាជិក <span class="count-chip" v-if="!isLoading">{{ userStore.pagination.total }}</span></h1>
                     </div>
 
                     <div class="header-actions">
                         <div class="search-wrapper">
                             <i class="bi bi-search search-icon"></i>
-                            <input v-model="searchQuery" type="text" placeholder="Search members..." />
+                            <input v-model="searchQuery" type="text" placeholder="ស្វែងរកអ្នកប្រើ..." />
                             <div class="search-shortcut">⌘K</div>
                         </div>
 
@@ -38,7 +38,7 @@
                     <div class="stat-card">
                         <div class="stat-icon blue"><i class="bi bi-people-fill"></i></div>
                         <div class="stat-data">
-                            <span class="label">Total Members</span>
+                            <span class="label">អ្នកប្រើប្រាស់សរុប</span>
                             <span class="value">{{ userStore.pagination.total }}</span>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                     <div class="stat-card">
                         <div class="stat-icon purple"><i class="bi bi-lightning-fill"></i></div>
                         <div class="stat-data">
-                            <span class="label">Growth</span>
+                            <span class="label">ការកើនឡើង</span>
                             <span class="value">+12%</span>
                         </div>
                     </div>
@@ -96,10 +96,10 @@
                     <table class="premium-table">
                         <thead>
                             <tr>
-                                <th>Member Name</th>
-                                <th>Email Contact</th>
+                                <th>ឈ្មោះ</th>
+                                <th>អ៊ីមែល</th>
                                 <th>Current Status</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-end">ការកំណត់</th>
                             </tr>
                         </thead>
                         <tbody>

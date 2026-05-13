@@ -15,7 +15,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const users = ref([]);
   const usersTotal = ref(0);
 
-  // --- FILTER LOGIC: LAST 7 DAYS ---
+  // --- FILTER LAST 7 DAYS bn ta in 1 week te ---
   const isWithinLastWeek = (dateString) => {
     if (!dateString) return false;
     const itemDate = new Date(dateString);
@@ -30,7 +30,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   };
 
-  // Computed Recent Lists (Filtered to 1 week)
+  // filter ma week
   const recentCategories = computed(() => sortNewest(categories.value));
   const recentSkills = computed(() => sortNewest(skills.value));
   const recentSubjects = computed(() => sortNewest(subjects.value));
@@ -38,7 +38,6 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const recentDegrees = computed(() => sortNewest(degrees.value));
   const newestUsers = computed(() => sortNewest(users.value));
 
-  // --- STATS & CHARTS ---
   const barChartData = computed(() => [
     { label: "Skills", height: skills.value.length || 0 },
     { label: "Schools", height: schools.value.length || 0 },
@@ -58,11 +57,11 @@ export const useDashboardStore = defineStore("dashboard", () => {
   ]);
 
   const quickActionsData = [
-    { label: "Add Skill", sub: "Create new skill", icon: "bi-lightbulb" },
-    { label: "Add School", sub: "Register school", icon: "bi-building" },
-    { label: "Add Degree", sub: "New degree type", icon: "bi-mortarboard" },
-    { label: "Add Subject", sub: "Create subject", icon: "bi-journal" },
-    { label: "Add Category", sub: "New category", icon: "bi-folder-plus" },
+    { label: "បន្ថែម​ជំនាញ", sub: "បង្កើតជំនាញថ្មី", icon: "bi-lightbulb" },
+    { label: "បន្ថែម​សាលា", sub: "ចុះ​ឈ្មោះ​សាលា", icon: "bi-building" },
+    { label: "បន្ថែម​កម្រិតការសិក្សា", sub: "បង្កើតប្រភេទកម្រិតថ្មី", icon: "bi-mortarboard" },
+    { label: "បន្ថែម​មុខវិជ្ជា", sub: "បង្កើតមុខវិជ្ជាថ្មី", icon: "bi-journal" },
+    { label: "បន្ថែម​ប្រភេទ", sub: "បង្កើតប្រភេទថ្មី", icon: "bi-folder-plus" },
   ];
 
   const fetchDashboardData = async () => {
