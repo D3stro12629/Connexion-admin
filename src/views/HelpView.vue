@@ -7,17 +7,17 @@
         <div class="meta-header">          
           <div class="status-chip">
             <div class="pulse-dot"></div>
-            <span class="status-text">Career Tools Live</span>
+            <span class="status-text">កំពុងផ្សាយផ្ទាល់</span>
             <span class="divider"></span>
-            <a href="#" class="status-link">Hiring Trends</a>
+            <a href="#" class="status-link">មើលការងារកំពុងត្រូវប៉ាន់</a>
           </div>
         </div>
 
         <!-- Hero Section -->
         <header class="hero-section">
           <div class="hero-text">
-            <h1 class="main-title">How can we support your career?</h1>
-            <p class="hero-subtitle">Search for guides on job applications, profile optimization, and community networking.</p>
+            <h1 class="main-title">តើយើងអាចជួយអ្វីខ្លះដល់ការងារអ្នក?</h1>
+            <p class="hero-subtitle">ស្វែងរកការណែនាំពីរបៀបដាក់ពាក្យធ្វើការ របៀបរៀបចំប្រវត្តិរូប (Profile) និងការរាប់អានមិត្តភក្តិក្នុងសហគមន៍។</p>
           </div>
           
           <div class="search-command-group">
@@ -27,7 +27,7 @@
                 ref="searchInput"
                 v-model="searchQuery" 
                 type="text" 
-                placeholder="Search for 'Resume tips', 'Interview prep', or 'Referrals'..." 
+                placeholder="សាកស្វែងរក 'របៀបសរសេរ CV', 'ត្រៀមសម្ភាសន៍' ឬ 'ណែនាំការងារ'..." 
                 @focus="isSearchFocused = true"
                 @blur="isSearchFocused = false"
               />
@@ -36,10 +36,10 @@
               </div>
             </div>
             <div class="quick-tags">
-              <span>Trending:</span>
-              <button @click="searchQuery = 'CV Review'">CV Review</button>
-              <button @click="searchQuery = 'Remote Jobs'">Remote Jobs</button>
-              <button @click="searchQuery = 'Portfolio'">Portfolio</button>
+              <span>កំពុងល្បី:</span>
+              <button @click="searchQuery = 'ពិនិត្យ CV'">ពិនិត្យ CV</button>
+              <button @click="searchQuery = 'ការងារធ្វើនៅផ្ទះ'">ការងារធ្វើនៅផ្ទះ</button>
+              <button @click="searchQuery = 'កម្រងស្នាដៃ (Portfolio)'">កម្រងស្នាដៃ (Portfolio)</button>
             </div>
           </div>
         </header>
@@ -54,7 +54,7 @@
               <h3>{{ topic.title }}</h3>
               <p>{{ topic.desc }}</p>
               <div class="topic-footer">
-                <span class="article-count">{{ topic.count }} guides</span>
+                <span class="article-count">មាន {{ topic.count }} មេរៀនណែនាំ</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </div>
             </div>
@@ -65,8 +65,8 @@
           <!-- Left Column: Career FAQs -->
           <main class="main-content">
             <div class="section-header">
-              <h2 class="content-label">Career & Community FAQ</h2>
-              <a href="#" class="view-all">See all questions</a>
+              <h2 class="content-label">សំណួរដែលគេសួរញឹកញាប់</h2>
+              <a href="#" class="view-all">មើលសំណួរទាំងអស់</a>
             </div>
 
             <div class="faq-list">
@@ -86,9 +86,9 @@
                   <div class="answer-inner">
                     {{ faq.a }}
                     <div class="answer-actions">
-                      <span>Was this helpful?</span>
-                      <button class="vote-btn">Helpful</button>
-                      <button class="vote-btn">Not really</button>
+                      <span>តើព័ត៌មាននេះជួយអ្នកបានទេ?</span>
+                      <button class="vote-btn">ជួយបានច្រើន</button>
+                      <button class="vote-btn">មិនសូវជួយទេ</button>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
           <!-- Right Column -->
           <aside class="sidebar-stack">
             <div class="sidebar-card articles">
-              <h4 class="sidebar-label">Featured Career Reads</h4>
+              <h4 class="sidebar-label">អត្ថបទល្អៗគួរអាន</h4>
               <div class="featured-list">
                 <a href="#" v-for="art in featuredArticles" :key="art" class="featured-item">
                   <div class="art-dot"></div>
@@ -110,17 +110,17 @@
 
             <div class="sidebar-card contact">
               <div class="contact-header">
-                <h4>Talk to a Career Expert</h4>
-                <p>Response time: &lt; 4 hours</p>
+                <h4>ជជែកជាមួយអ្នកជំនាញ</h4>
+                <p>ឆ្លើយតបលឿន: តិចជាង 4 ម៉ោង</p>
               </div>
               <div class="contact-methods">
                 <button class="method-btn primary">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-                  Request CV Audit
+                  ផ្ញើ CV ឱ្យជួយពិនិត្យ
                 </button>
                 <button class="method-btn secondary">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                  Mentorship Chat
+                  ជជែកសាកសួរយោបល់
                 </button>
               </div>
             </div>
@@ -128,8 +128,8 @@
             <div class="community-banner">
               <div class="comm-icon">🤝</div>
               <div class="comm-text">
-                <h5>Hiring Network</h5>
-                <p>Join 5,000+ members sharing job leads</p>
+                <h5>បណ្តាញចែករំលែកការងារ</h5>
+                <p>ចូលរួមជាមួយសមាជិកជាង 5,000 នាក់ ដើម្បីដឹងពីឱកាសការងារមុនគេ</p>
               </div>
             </div>
           </aside>
@@ -161,23 +161,23 @@ onMounted(() => window.addEventListener('keydown', handleKey));
 onUnmounted(() => window.removeEventListener('keydown', handleKey));
 
 const mainTopics = [
-  { title: 'Profile Mastery', desc: 'How to build a standout professional presence that attracts recruiters.', count: 18, color: '#818cf8', bg: 'rgba(129, 140, 248, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' },
-  { title: 'Job Navigator', desc: 'Mastering the search filters and applying for verified high-benefit roles.', count: 32, color: '#c084fc', bg: 'rgba(192, 132, 252, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>' },
-  { title: 'Network Perks', desc: 'Unlock community benefits: referrals, salary data, and partner discounts.', count: 14, color: '#4ade80', bg: 'rgba(74, 222, 128, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
-  { title: 'Hiring Safety', desc: 'Report suspicious listings and keep your job application data private.', count: 11, color: '#fb7185', bg: 'rgba(251, 113, 133, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' }
+  { title: 'រៀបចំប្រវត្តិរូបឱ្យទាក់ទាញ', desc: 'របៀបធ្វើឱ្យប្រវត្តិរូបរបស់អ្នកលេចធ្លោខ្លាំង រហូតដល់អ្នករើសបុគ្គលិកទាក់ទងមកមុន។', count: 18, color: '#818cf8', bg: 'rgba(129, 140, 248, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' },
+  { title: 'ជំនួយការស្វែងរកការងារ', desc: 'របៀបប្រើតម្រងស្វែងរក ដើម្បីរកមើលការងារល្អៗ ផ្ដល់ប្រយោជន៍ច្រើន និងមានសុវត្ថិភាពខ្ពស់។', count: 32, color: '#c084fc', bg: 'rgba(192, 132, 252, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>' },
+  { title: 'អត្ថប្រយោជន៍ពីសហគមន៍', desc: 'ទទួលបានការណែនាំការងារផ្ទាល់ខាងក្នុង ដឹងពីប្រាក់ខែក្នុងទីផ្សារ និងការបញ្ចុះតម្លៃពិសេសៗ។', count: 14, color: '#4ade80', bg: 'rgba(74, 222, 128, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
+  { title: 'សុវត្ថិភាពក្នុងការរកការងារ', desc: 'របៀបរាយការណ៍ពេលឃើញការងារបោកប្រាស់ និងរក្សាការសម្ងាត់នៃទិន្នន័យរបស់អ្នក។', count: 11, color: '#fb7185', bg: 'rgba(251, 113, 133, 0.1)', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' }
 ];
 
 const faqs = [
-  { q: 'How do I get the "Verified Talent" badge?', a: 'To get verified, complete your profile to 100%, link a valid LinkedIn or GitHub, and have three community members endorse your skills. Verified profiles get 3x more recruiter views.' },
-  { q: 'Can my current employer see my activity?', a: 'No. By default, your "Actively Looking" status is hidden from members who work at your current company (defined in your Profile settings).' },
-  { q: 'How do I request a referral from the community?', a: 'Go to the company page you are interested in and click "Request Referral." This will notify community members working there who have opted-in to help.' }
+  { q: 'តើធ្វើដូចម្តេចទើបបានកាតគ្រីពណ៌ខៀវ "Verified Talent" (អ្នកជំនាញពិតប្រាកដ)?', a: 'ដើម្បីបានកាតគ្រីនេះ អ្នកត្រូវបំពេញព័ត៌មានផ្ទាល់ខ្លួនឱ្យបាន ១០០% ភ្ជាប់គណនី LinkedIn ឬ GitHub របស់អ្នក និងមានសមាជិកក្នុងសហគមន៍ ៣ នាក់ជួយធានាលើជំនាញរបស់អ្នក។ ប្រវត្តិរូបដែលមានកាតគ្រីនេះ នឹងទទួលបានការចាប់អារម្មណ៍ពីក្រុមហ៊ុននានាច្រើនជាងមុនដល់ទៅ ៣ ដង។' },
+  { q: 'តើមេ ឬក្រុមហ៊ុនបច្ចុប្បន្នរបស់ខ្ញុំ អាចដឹងពីសកម្មភាពរបស់ខ្ញុំនៅទីនេះទេ?', a: 'មិនដឹងទេ! ប្រព័ន្ធនឹងលាក់ស្ថានភាព "កំពុងរកការងារថ្មី" របស់អ្នកមិនឱ្យបុគ្គលិកដែលធ្វើការក្នុងក្រុមហ៊ុនជាមួយគ្នាមើលឃើញឡើយ (អ្នកអាចកំណត់ឈ្មោះក្រុមហ៊ុនបច្ចុប្បន្នរបស់អ្នកនៅក្នុងផ្នែក Settings)។' },
+  { q: 'តើខ្ញុំអាចសុំឱ្យគេជួយណែនាំការងារ (Referral) ក្នុងសហគមន៍ដោយរបៀបណា?', a: 'ងាយៗ គ្រាន់តែចូលទៅកាន់ទំព័រក្រុមហ៊ុនដែលអ្នកចង់ធ្វើការ រួចចុចពាក្យ "សុំការណែនាំ" (Request Referral)។ ប្រព័ន្ធនឹងផ្ញើសារទៅកាន់សមាជិកដែលកំពុងធ្វើការនៅទីនោះ ហើយស្ម័គ្រចិត្តជួយណែនាំបុគ្គលិកថ្មី។' }
 ];
 
 const featuredArticles = [
-  'Cracking the 2024 Tech Interview',
-  'Writing a CV that beats the ATS',
-  'How to negotiate remote work benefits',
-  'Building a portfolio with zero experience'
+  'គន្លឹះសម្ភាសន៍ការងារផ្នែកបច្ចេកវិទ្យាឱ្យជាប់',
+  'របៀបសរសេរ CV ឱ្យត្រូវចិត្តប្រព័ន្ធស្កេនស្វ័យប្រវត្តិ (ATS)',
+  'របៀបចរចាប្រាក់ខែ និងអត្ថប្រយោជន៍ពេលធ្វើការនៅផ្ទះ',
+  'របៀបធ្វើកម្រងស្នាដៃ (Portfolio) សម្រាប់អ្នកគ្មានបទពិសោធន៍សោះ'
 ];
 
 const filteredFaqs = computed(() => {
@@ -186,7 +186,9 @@ const filteredFaqs = computed(() => {
   return faqs.filter(f => f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q));
 });
 </script>
+
 <style scoped>
+/* រក្សាទុក Style ដដែល ដើម្បីកុំឱ្យខូចទម្រង់ Layout */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 .premium-support-page {
@@ -209,7 +211,6 @@ const filteredFaqs = computed(() => {
   margin: 0 auto;
 }
 
-/* Meta Header */
 .meta-header {
   display: flex;
   justify-content: space-between;
@@ -244,7 +245,6 @@ const filteredFaqs = computed(() => {
 .status-chip .divider { width: 1px; height: 12px; background: rgba(34, 197, 94, 0.2); }
 .status-link { color: #22c55e; text-decoration: none; opacity: 0.8; }
 
-/* Hero Section */
 .hero-section {
   text-align: center;
   margin-bottom: 64px;
@@ -287,7 +287,6 @@ const filteredFaqs = computed(() => {
   background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; font-weight: 500;
 }
 
-/* Topic Grid */
 .topic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -330,7 +329,6 @@ const filteredFaqs = computed(() => {
 
 .topic-card:hover .topic-footer { color: var(--accent); }
 
-/* Main Content Layout */
 .layout-body {
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -377,7 +375,6 @@ const filteredFaqs = computed(() => {
   color: white; padding: 4px 12px; border-radius: 6px; cursor: pointer;
 }
 
-/* Sidebar */
 .sidebar-stack { display: flex; flex-direction: column; gap: 32px; }
 
 .sidebar-card {
