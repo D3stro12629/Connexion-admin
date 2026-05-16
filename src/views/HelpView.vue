@@ -114,10 +114,10 @@
                 <p>ឆ្លើយតបលឿន: តិចជាង 4 ម៉ោង</p>
               </div>
               <div class="contact-methods">
-                <button class="method-btn primary">
+                <a class="method-btn primary text-decoration-none" href="https://t.me/destroholy" target="_blank" rel="noopener noreferrer" aria-label="Open Telegram chat with @destroholy">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
                   ផ្ញើ CV ឱ្យជួយពិនិត្យ
-                </button>
+                </a>
                 <button class="method-btn secondary">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                   ជជែកសាកសួរយោបល់

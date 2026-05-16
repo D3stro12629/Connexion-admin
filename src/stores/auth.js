@@ -13,12 +13,6 @@ export const useAuthStore = defineStore("auth", () => {
   const isLoggedIn = computed(() => !!token.value);
   const userRole = computed(() => user.value?.roles?.[0]?.name || null);
 
-  // --- ACTIONS ---
-
-  /**
-   * ✅ SYNC ACTION: Updates the user state instantly
-   * This is called by ProfileStore to update the Navbar
-   */
   const updateUser = (updatedData) => {
     if (user.value) {
       user.value = { ...user.value, ...updatedData };
