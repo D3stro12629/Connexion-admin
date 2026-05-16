@@ -27,7 +27,6 @@
           <p v-if="errors.email_or_phone" class="error-text">{{ errors.email_or_phone }}</p>
         </div>
 
-        <!-- Password Field -->
         <div class="input-group-wrapper">
           <div class="label-row">
             <label class="field-label">ពាក្យសម្ងាត់</label>
@@ -47,7 +46,6 @@
           <p v-if="errors.password" class="error-text">{{ errors.password }}</p>
         </div>
 
-        <!-- API Error Message -->
         <Transition name="fade">
           <div v-if="apiError" class="api-error-alert">
             <i class="bi bi-exclamation-triangle-fill"></i>
@@ -111,7 +109,6 @@ const validate = () => {
   return !errors.email_or_phone && !errors.password
 }
 
-// ── Handle Login ──────────────────────────────────────────────────────────────
 const handleLogin = async () => {
   apiError.value = ''
   submitted.value = true
@@ -127,12 +124,10 @@ const handleLogin = async () => {
       password: credentials.password,
     })
 
-    if (success) {
-     
+    if (success) {     
       if (role === 'System Admin' || role === 'Service Provider') {
         await router.push({ name: 'dashboard' })
       } else {
-        // Role not allowed
         authStore.clearAuth()
         apiError.value = `Access denied. Role "${role}" is not permitted.`
       }
@@ -141,7 +136,7 @@ const handleLogin = async () => {
   } catch (error) {
     apiError.value = typeof error === 'string'
       ? error
-      : error.message || 'Login failed. Please try again.'
+      : error.message || 'ការចូលគណនីបរាជ័យ! សូមព្យាយាមម្តងទៀត!'
   } finally {
     isLoading.value = false
   }
